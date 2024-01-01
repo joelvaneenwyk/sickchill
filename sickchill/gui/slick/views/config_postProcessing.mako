@@ -455,7 +455,7 @@
                                     <div class="col-md-12">
                                         <label>
                                             ${_('see')}
-                                            <a href="https://github.com/SickChill/SickChill/wiki/Post-Processing#extra-scripts">
+                                            <a href="https://github.com/joelvaneenwyk/SickChill/wiki/Post-Processing#extra-scripts">
                                                 <span style="color:red;">Wiki</span>
                                             </a>${_('for script arguments description and usage.')}
                                         </label>

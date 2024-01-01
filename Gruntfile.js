@@ -541,7 +541,7 @@ module.exports = function(grunt) {
             contents += '### ' + tag.tag + '\n';
             contents += '\n';
             if (tag.previous) {
-                contents += '[full changelog](https://github.com/SickChill/SickChill/compare/' +
+                contents += '[full changelog](https://github.com/joelvaneenwyk/SickChill/compare/' +
                     tag.previous + '...' + tag.tag + ')\n';
             }
             contents += '\n';

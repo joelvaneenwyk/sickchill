@@ -246,7 +246,7 @@
                                             <ul>
                                                 <li>
                                                     ${_('See')}
-                                                    <a href="https://github.com/SickChill/SickChill/wiki/Subtitle%20Scripts">
+                                                    <a href="https://github.com/joelvaneenwyk/SickChill/wiki/Subtitle%20Scripts">
                                                         <span style="color:red"><b>Wiki</b></span>
                                                     </a>
                                                     ${_('for a script arguments description.')}
