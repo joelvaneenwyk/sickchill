@@ -15,7 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONIOENCODING="UTF-8"
 ENV PYTHONUNBUFFERED=1
 
-ARG SOURCE
+ARG SOURCE="Local"
 ARG PIP_EXTRA_INDEX_URL="https://www.piwheels.org/simple"
 ARG HOME=${HOME:-}
 
@@ -41,16 +41,16 @@ RUN mkdir -m 777 -p /sickchill "$POETRY_CACHE_DIR"
 
 RUN sed -i -e "s/ main/ main contrib non-free/gm" /etc/apt/sources.list
 RUN apt-get update -qq && apt-get upgrade -yqq && \
- apt-get install -yqq curl libxml2 libxslt1.1 libffi7 libssl1.1 libmediainfo0v5 mediainfo unrar && \
- apt-get clean -yqq && \
- rm -rf /var/lib/apt/lists/*
+  apt-get install -yqq curl libxml2 libxslt1.1 libffi7 libssl1.1 libmediainfo0v5 mediainfo unrar && \
+  apt-get clean -yqq && \
+  rm -rf /var/lib/apt/lists/*
 
 FROM base as builder
 RUN apt-get update -qq && apt-get upgrade -yqq && \
- apt-get install -yqq build-essential python3-distutils-extra python3-dev \
- libxml2-dev libxslt1-dev libffi-dev libssl-dev libmediainfo-dev findutils sed && \
- apt-get clean -yqq && \
- rm -rf /var/lib/apt/lists/*
+  apt-get install -yqq build-essential python3-distutils-extra python3-dev \
+  libxml2-dev libxslt1-dev libffi-dev libssl-dev libmediainfo-dev findutils sed && \
+  apt-get clean -yqq && \
+  rm -rf /var/lib/apt/lists/*
 
 ENV HOME="/root/"
 ENV CARGO_HOME="/root/.cargo"
@@ -68,7 +68,7 @@ ENV RUSTUP_IO_THREADS 1
 ENV CARGO_TERM_VERBOSE "true"
 ENV CARGO "$CARGO_HOME/bin/cargo"
 
-RUN --security=insecure curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sed 's#/proc/self/exe#$SHELL#g' | sh -s -- -y --profile minimal --default-toolchain nightly
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sed 's#/proc/self/exe#$SHELL#g' | sh -s -- -y --profile minimal --default-toolchain nightly
 
 ENV PATH "$RUSTUP_HOME/bin:$CARGO_HOME/bin:$PATH"
 
@@ -82,20 +82,20 @@ COPY . /sickchill/
 # https://github.com/rust-lang/cargo/issues/8719#issuecomment-1253575253
 RUN --mount=type=tmpfs,target="$CARGO_HOME" if [ -z "$SOURCE" ]; then \
   pip install --upgrade "sickchill[speedups]"; \
-else \
+  else \
   pip install --upgrade poetry && poetry run pip install -U setuptools-rust pycparser && \
   poetry build --no-interaction --no-ansi && pip install --upgrade --find-links=./dist "sickchill[speedups]"; \
-fi
+  fi
 
 RUN mkdir -m 777 /sickchill-wheels && \
- pip download sickchill --dest /sickchill-wheels && \
- rm -rf /sickchill-wheels/*none-any.whl && \
- rm -rf /sickchill-wheels/*.gz;
+  pip download sickchill --dest /sickchill-wheels && \
+  rm -rf /sickchill-wheels/*none-any.whl && \
+  rm -rf /sickchill-wheels/*.gz;
 
 RUN if [ -z "$SOURCE" ]; then \
   rm -rf /sickchill-wheels/sickchill*.whl && \
   cp dist/sickchill*.whl /sickchill-wheels/; \
-fi
+  fi
 
 FROM scratch AS sickchill-wheels
 COPY --from=builder /sickchill-wheels /
@@ -114,4 +114,4 @@ CMD ["sickchill", "--nolaunch", "--datadir", "/data", "--port", "8081"]
 EXPOSE 8081
 
 HEALTHCHECK --interval=5m --timeout=3s \
- CMD bash -c 'if [ $(curl -f http://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; elif [ $(curl -f https://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; else echo 1; fi'
+  CMD bash -c 'if [ $(curl -f http://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; elif [ $(curl -f https://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; else echo 1; fi'
