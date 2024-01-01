@@ -62,7 +62,7 @@ jobs:
           ${{ github.repository }}
           ghcr.io/${{ github.repository }}
         labels: |
-          org.opencontainers.image.source=https://github.com/sickchill/sickchill
+            org.opencontainers.image.source=https://github.com/joelvaneenwyk/sickchill
           org.opencontainers.image.url=https://sickchill.github.io
           org.opencontainers.image.licenses=GPL-3.0+
         tags: |

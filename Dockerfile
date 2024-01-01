@@ -8,7 +8,7 @@
 
 FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye as base
 
-LABEL org.opencontainers.image.source="https://github.com/sickchill/sickchill"
+LABEL org.opencontainers.image.source="https://github.com/joelvaneenwyk/sickchill"
 LABEL maintainer="miigotu@gmail.com"
 
 ENV DEBIAN_FRONTEND=noninteractive
