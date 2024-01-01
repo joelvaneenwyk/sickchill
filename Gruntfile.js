@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     const CI = Boolean(process.env.CI);
 
     grunt.registerTask('default', [
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         'cssmin'
     ]);
 
-    grunt.registerTask('auto_update_trans', 'Update translations on master and push to master & develop', function() {
+    grunt.registerTask('auto_update_trans', 'Update translations on master and push to master & develop', function () {
         if (!CI) {
             grunt.fatal('This task is only for CI!');
             return false;
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         'genchanges' // Update CHANGES.md
     ]);
 
-    grunt.registerTask('reset_publishing', 'reset the repository back to clean master and develop from remote, and remove the local tag created to facilitate easier testing to the changes made here.', function() {
+    grunt.registerTask('reset_publishing', 'reset the repository back to clean master and develop from remote, and remove the local tag created to facilitate easier testing to the changes made here.', function () {
         if (CI) {
             grunt.fatal('This task not for CI!');
             return false;
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
         'exec:git_push:origin:develop:tags', // Push develop + tags
     ]);
 
-    grunt.registerTask('genchanges', "Generate CHANGES.md file", function() {
+    grunt.registerTask('genchanges', "Generate CHANGES.md file", function () {
         let file = grunt.option('file'); // --file=path/to/sickchill.github.io/sickchill-news/CHANGES.md
         if (!file) {
             file = process.env.SICKCHILL_CHANGES_FILE;
@@ -256,17 +256,17 @@ module.exports = function(grunt) {
         },
         exec: {
             // Translations
-            'update_translations': {cmd: 'poe update_translations'},
+            'update_translations': { cmd: 'poe update_translations' },
             'check_return_branch': {
                 cmd: function (go_back) {
-                    let command = 'git branch --show-current'
+                    let command = 'git branch --show-current';
                     if (Boolean(go_back)) {
-                         command = 'git checkout ' + grunt.config('return_branch') + ' && ' + command;
+                        command = 'git checkout ' + grunt.config('return_branch') + ' && ' + command;
                     }
                     return command;
                 },
                 stdout: false,
-                callback: function(err, stdout) {
+                callback: function (err, stdout) {
                     stdout = stdout.trim();
                     if (!stdout.length) {
                         grunt.fatal('Could not find out what branch you were on!', 0);
@@ -278,13 +278,13 @@ module.exports = function(grunt) {
                 cmd: function () {
                     return 'poetry version ' + grunt.config('next_version');
                 },
-                callback: function(err, stdout) {
+                callback: function (err, stdout) {
                     stdout = stdout.trim();
                     if (!stdout.length) {
                         grunt.fatal('No changes to commit.', 0);
                     }
                     if (!stdout.match(/Bumping version from \d{4}\.\d{1,2}\.\d{1,2}(\.\d*)?/)) {
-                        grunt.fatal('Did the version update in pyproject.toml?')
+                        grunt.fatal('Did the version update in pyproject.toml?');
                     }
                 }
             },
@@ -292,13 +292,13 @@ module.exports = function(grunt) {
             // delete tags from today
             'delete_today_tags': {
                 cmd: function () {
-                    return 'git tag -d $(git describe --match "' + grunt.config('today') + '*" --abbrev=0 --tags $(git rev-list --tags --max-count=1))'
+                    return 'git tag -d $(git describe --match "' + grunt.config('today') + '*" --abbrev=0 --tags $(git rev-list --tags --max-count=1))';
                 },
                 stderr: false
             },
 
             // Run tests
-            'test': {cmd: 'yarn run test || npm run test'},
+            'test': { cmd: 'yarn run test || npm run test' },
 
             // Publish/Releases
             'git': {
@@ -308,12 +308,12 @@ module.exports = function(grunt) {
                 }
             },
             'commit_changed_files': { // Choose what to commit.
-                cmd: function(ci) {
+                cmd: function (ci) {
                     grunt.config('stop_no_changes', Boolean(ci));
                     return 'git status -s -- pyproject.toml sickchill/locale/ sickchill/gui/';
                 },
                 stdout: false,
-                callback: function(err, stdout) {
+                callback: function (err, stdout) {
                     stdout = stdout.trim();
                     if (!stdout.length) {
                         grunt.fatal('No changes to commit.', 0);
@@ -322,7 +322,7 @@ module.exports = function(grunt) {
                     let commitMsg = [];
                     let commitPaths = [];
 
-                    let isRelease = stdout.match(/pyproject.toml/gm)
+                    let isRelease = stdout.match(/pyproject.toml/gm);
 
                     if (isRelease) {
                         commitMsg.push('Release version ' + grunt.config('next_version'));
@@ -361,7 +361,7 @@ module.exports = function(grunt) {
                 }
             },
             'commit_combined': {
-                cmd: function() {
+                cmd: function () {
                     const message = grunt.config('commit_msg');
                     const paths = grunt.config('commit_paths');
                     if (!message || !paths) {
@@ -369,7 +369,7 @@ module.exports = function(grunt) {
                     }
                     return 'git add -- ' + paths;
                 },
-                callback: function(err) {
+                callback: function (err) {
                     if (!err) {
                         if (!CI) {
                             grunt.task.run('exec:git:commit:-m "' + grunt.config('commit_msg') + '"');
@@ -382,9 +382,9 @@ module.exports = function(grunt) {
                 }
             },
             'git_list_changes': {
-                cmd: function() { return 'git log --oneline --first-parent --pretty=format:%s ' + grunt.config('last_version') + '..HEAD'; },
+                cmd: function () { return 'git log --oneline --first-parent --pretty=format:%s ' + grunt.config('last_version') + '..HEAD'; },
                 stdout: false,
-                callback: function(err, stdout) {
+                callback: function (err, stdout) {
                     let commits = stdout.trim()
                         .replace(/`/gm, '').replace(/^\([\w\s,.\-+_/>]+\)\s/gm, '').replace(/"/gm, '\\"');  // removes ` and tag information
                     if (commits) {
@@ -416,14 +416,14 @@ module.exports = function(grunt) {
                     return pushCmd;
                 },
                 stderr: false,
-                callback: function(err, stdout, stderr) {
+                callback: function (err, stdout, stderr) {
                     grunt.log.write(stderr.replace(process.env.GH_CRED, '[censored]'));
                 }
             },
             'git_list_tags': {
                 cmd: 'git for-each-ref --sort=refname --format="%(refname:short)|||%(objectname)|||%(contents)\xB6\xB6\xB6" refs/tags/20[0-9][0-9].[0-9][0-9].[0-9][0-9]*',
                 stdout: false,
-                callback: function(err, stdout) {
+                callback: function (err, stdout) {
                     if (!stdout) {
                         grunt.fatal('Git command returned no data.');
                     }
@@ -434,7 +434,7 @@ module.exports = function(grunt) {
                         .replace(/-{5}BEGIN PGP SIGNATURE-{5}(.*\n)+?-{5}END PGP SIGNATURE-{5}\n/g, '')
                         .split('\xB6\xB6\xB6');
                     let foundTags = [];
-                    allTags.forEach(function(curTag) {
+                    allTags.forEach(function (curTag) {
                         if (curTag.length) {
                             let explode = curTag.split('|||');
                             if (explode[0] && explode[1] && explode[2]) {
@@ -455,7 +455,7 @@ module.exports = function(grunt) {
                 }
             },
             'commit_changelog': {
-                cmd: function() {
+                cmd: function () {
                     const file = grunt.config('changesmd_file');
                     if (!file) {
                         grunt.fatal('Missing file path.');
@@ -480,7 +480,7 @@ module.exports = function(grunt) {
     /****************************************
     *  Internal tasks                       *
     *****************************************/
-    grunt.registerTask('_get_last_version', '(internal) do not run', function() {
+    grunt.registerTask('_get_last_version', '(internal) do not run', function () {
         const toml = require('toml');
 
         const file = './pyproject.toml';
@@ -490,12 +490,12 @@ module.exports = function(grunt) {
 
         const version = toml.parse(grunt.file.read(file)).tool.poetry.version;
         if (version === null) {
-            grunt.fatal("Error processing pyproject.toml, cannot proceed")
+            grunt.fatal("Error processing pyproject.toml, cannot proceed");
         }
-        grunt.config('last_version', version)
+        grunt.config('last_version', version);
     });
 
-    grunt.registerTask('_get_next_version', '(internal) do not run', function(skip_post) {
+    grunt.registerTask('_get_next_version', '(internal) do not run', function (skip_post) {
         const date_object = new Date();
         const year = date_object.getFullYear();
         const day = date_object.getDate();
@@ -504,11 +504,11 @@ module.exports = function(grunt) {
         const minutes = date_object.getUTCMinutes();
         const seconds = date_object.getUTCSeconds();
 
-        let next_version = year.toString() + '.' + month.toString().padStart(2-month.length, "0") + '.' + day.toString().padStart(2-day.length, "0")
+        let next_version = year.toString() + '.' + month.toString().padStart(2 - month.length, "0") + '.' + day.toString().padStart(2 - day.length, "0");
         grunt.config('today', next_version); // Needed for resetting failed publishing.
 
         if (Boolean(skip_post)) {
-            return
+            return;
         }
 
         const last_version = grunt.config('last_version');
@@ -517,14 +517,14 @@ module.exports = function(grunt) {
         }
 
         if (next_version === last_version) {
-            grunt.fatal('Let\'s only release once a day, or semver is broken. We can fix this when we do away with grunt')
-            next_version += '.' + hours + minutes + seconds
+            grunt.fatal('Let\'s only release once a day, or semver is broken. We can fix this when we do away with grunt');
+            next_version += '.' + hours + minutes + seconds;
         }
 
         grunt.config('next_version', next_version);
     });
 
-    grunt.registerTask('_genchanges', "(internal) do not run", function() {
+    grunt.registerTask('_genchanges', "(internal) do not run", function () {
         // actual generate changes
         const allTags = grunt.config('all_tags');
         if (!allTags) {
@@ -537,7 +537,7 @@ module.exports = function(grunt) {
         }
 
         let contents = "";
-        allTags.forEach(function(tag) {
+        allTags.forEach(function (tag) {
             contents += '### ' + tag.tag + '\n';
             contents += '\n';
             if (tag.previous) {
@@ -549,18 +549,18 @@ module.exports = function(grunt) {
                 contents += row
                     // link issue n return 'git tag ' + grunt.config('next_version') + ' -sm "' + grunt.config('commits') + '"';umbers, style links of issues and pull requests
                     .replace(/([\w\-.]+\/[\w\-.]+)?#(\d+)|https?:\/\/github.com\/([\w\-.]+\/[\w\-.]+)\/(issues|pull)\/(\d+)/gm,
-                        function(all, repoL, numL, repoR, typeR, numR) {
+                        function (all, repoL, numL, repoR, typeR, numR) {
                             if (numL) { // repoL, numL = user/repo#1234 style
                                 return '[' + (repoL ? repoL : '') + '#' + numL + '](https://github.com/' +
-                                (repoL ? repoL : 'SickChill/SickChill') + '/issues/' + numL + ')';
+                                    (repoL ? repoL : 'SickChill/SickChill') + '/issues/' + numL + ')';
                             } else if (numR) { // repoR, type, numR = https://github/user/repo/issues/1234 style
                                 return '[#' + numR + ']' + '(https://github.com/' +
                                     repoR + '/' + typeR + '/' + numR + ')';
                             }
-                    })
+                        })
                     // shorten and link commit hashes
-                    .replace(/([a-f\d]{40}(?![a-f\d]))/g, function(sha1) {
-                        return '[' + sha1.substring(0, 7) + '](https://github.com/SickChill/SickChill/commit/' + sha1 + ')';
+                    .replace(/([a-f\d]{40}(?![a-f\d]))/g, function (sha1) {
+                        return '[' + sha1.substring(0, 7) + '](https://github.com/joelvaneenwyk/SickChill/commit/' + sha1 + ')';
                     })
                     // remove tag information
                     .replace(/^\([\w\s,.\-+/>]+\)\s/gm, '')
