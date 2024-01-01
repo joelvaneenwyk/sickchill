@@ -4,12 +4,12 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SickChill/SickChill.git"
+    "url": "git+https://github.com/joelvaneenwyk/SickChill.git"
   },
   "bugs": {
-    "url": "https://github.com/SickChill/SickChill/issues"
+    "url": "https://github.com/joelvaneenwyk/SickChill/issues"
   },
-  "homepage": "https://github.com/SickChill/SickChill#readme",
+  "homepage": "https://github.com/joelvaneenwyk/SickChill#readme",
   "scripts": {
     "test": "xo --verbose && ava --verbose",
     "security": "snyk test",
