@@ -12,6 +12,9 @@ jobs:
   depends:
     strategy:
       fail-fast: true
+      matrix:
+        python: [3.9]
+        node: [16.x]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -31,14 +34,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python }}
           check-latest: true
           cache: "poetry"
           cache-dependency-path: pyproject.toml
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: ${{ matrix.node }}
       - run: corepack enable
       - name: Run
         run: |
