@@ -39,7 +39,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16.x"
-          cache: "npm"
       - run: corepack enable
       - name: Install yarn
         run: npm install -g yarn
