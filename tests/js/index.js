@@ -1,6 +1,6 @@
-const test = require('ava');
+import { failing } from 'ava';
 
-test.failing('getMeta', t => {
+failing('getMeta', t => {
     const meta = document.createElement('meta', {
         'data-var': 'scRoot',
         content: '/sickchill',
