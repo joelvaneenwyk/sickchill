@@ -24,10 +24,10 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 
 packages = [
@@ -259,7 +259,7 @@ pybabel update
 """
 
 [tool.poetry.dependencies]
-python = ">=3.7.2,<4"
+python = ">=3.8,<4"
 "bencode.py" = "^4.0.0"
 configobj = "^5.0.6"
 greenlet = { version = ">=2.0.0", allow-prereleases = true }
@@ -274,10 +274,10 @@ python-twitter = "^3.5"
 rarfile = "^4.0"
 subliminal = "^2.1.0"
 tmdbsimple = "^2.8.0"
-tornado = "^6.1"
+tornado = "6.3.3"
 tvdbsimple = "^1.0.6"
 Unidecode = "^1.2.0"
-validators = ">=0.18.2,<0.21.0"
+validators = "0.21.0"
 enzyme = "^0.4.1"
 python3-fanart = "^2.0.0"
 gntp = "^1.0.3"
