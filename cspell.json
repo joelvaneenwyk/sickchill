@@ -13,6 +13,7 @@
     "codeql",
     "corepack",
     "depup",
+    "Gettext",
     "globbing",
     "Gruntfile",
     "ludeeus",
