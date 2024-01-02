@@ -45,7 +45,7 @@ jobs:
           key: ${{ github.workflow }}-environment
       - name: Create buildkitd config
         run: |
-          echo 'experimantal = true' > /tmp/buildkitd.toml
+          echo 'experimental = true' > /tmp/buildkitd.toml
           echo 'debug = true' >> /tmp/buildkitd.toml
           echo 'insecure-entitlements  = [ "security.insecure" ]' >> /tmp/buildkitd.toml
           # echo '[worker.oci]' >> /tmp/buildkitd.toml
@@ -79,7 +79,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: [3.7, 3.8, 3.9, "3.10", "3.11"]
+        python-version: ["3.10", "3.11", "3.7", "3.8", "3.9"]
         experimental: [false]
         include:
           - os: windows-latest
@@ -124,7 +124,7 @@ jobs:
         with:
           node-version: "16.x"
       - run: corepack enable
-      - name: Install python dependency tools
+      - name: Install Python dependency tools
         run: |
           poetry run pip install --upgrade setuptools wheel
           poetry run pip install --upgrade pytest-github-actions-annotate-failures
@@ -183,9 +183,9 @@ jobs:
           docker run -d --rm -p 8081:8081 --name ${{ env.DOCKER_CONTAINER_NAME }} ${{ env.DOCKER_TEST_TAG }}
           echo "Waiting ${{ env.SLEEP }} seconds for the container to start..." && sleep ${{ env.SLEEP }}
           echo "Checking if container is alive..."
-          [ $(curl http://0.0.0.0:8081/ui/get_messages -s) == "{}" ] && echo "Success!" || (echo "Faile" && exit 1)
+          [ $(curl http://0.0.0.0:8081/ui/get_messages -s) == "{}" ] && echo "Success!" || (echo "Failed" && exit 1)
           echo "Checking if we have a working home page..."
-          [ $(curl http://0.0.0.0:8081 -s) ~='site-notification-modal' ] && echo "Success!" || (echo "Faile" && exit 1)
+          [ $(curl http://0.0.0.0:8081 -s) ~='site-notification-modal' ] && echo "Success!" || (echo "Failed" && exit 1)
           echo "Stopping and removing container..."
           docker stop ${{ env.DOCKER_CONTAINER_NAME }}
   Deploy:
@@ -204,20 +204,20 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with:
           config: /tmp/buildkitd.toml
-      - if: github.actor == 'miigotu' && !env.ACT
+      - if: github.actor == 'joelvaneenwyk' && !env.ACT
         name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - if: github.actor == 'miigotu' && !env.ACT
+      - if: github.actor == 'joelvaneenwyk' && !env.ACT
         name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - if: github.actor == 'miigotu'
+      - if: github.actor == 'joelvaneenwyk'
         name: Build and Push
         uses: docker/build-push-action@v4
         with:
@@ -232,7 +232,7 @@ jobs:
             SOURCE=1
           allow: |
             security.insecure
-      - if: github.actor == 'miigotu'
+      - if: github.actor == 'joelvaneenwyk'
         name: Snag wheels
         uses: docker/build-push-action@v4
         with:
@@ -246,7 +246,7 @@ jobs:
             SOURCE=1
           allow: |
             security.insecure
-      - if: github.actor == 'miigotu'
+      - if: github.actor == 'joelvaneenwyk'
         name: List wheels directory
         run: |
           ls -R /tmp/sickchill-wheels
@@ -264,4 +264,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: armv7
-          path: /tmp/sickchill-wheels/lnux_arm_v7
+          path: /tmp/sickchill-wheels/linux_arm_v7
