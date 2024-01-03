@@ -13,39 +13,40 @@
 #
 
 # git config
-.gitattributes	text
-.gitignore		text
+.gitattributes text
+.gitignore text
 
 # Documentation
-*.md			text
-CHANGES			text
+*.md text
+CHANGES text
 
 # Startup script
-init.*			text
+init.* text
 
 # Various
-*.ini			text
-*.txt			text
-*.less			text
-*.h				text
-*.in			text
+*.ini text
+*.txt text
+*.less text
+*.h text
+*.in text
+*.hcl text
 
 # Python Source files
-*.pxd			text
-*.py 			text
-*.py3 			text
-*.pyw 			text
-*.pyx  			text
+*.pxd text
+*.py text
+*.py3 text
+*.pyw text
+*.pyx text
 
 # Mako template
-*.mako			text
+*.mako text
 
 # Web file
-*.htm			text
-*.html			text
-*.css			text
-*.js			text
-*.xml			text
+*.htm text
+*.html text
+*.css text
+*.js text
+*.xml text
 
 #
 ## These files are binary and should be left untouched
@@ -53,39 +54,39 @@ init.*			text
 #
 
 # Minified web files
-*.min.css		binary
-*.min.js		binary
+*.min.css binary
+*.min.js binary
 
 # Databases
-*.db			binary
+*.db binary
 
 # Python Binary files
-*.p 			binary
-*.pkl 			binary
-*.pyc 			binary
-*.pyd			binary
-*.pyo 			binary
+*.p binary
+*.pkl binary
+*.pyc binary
+*.pyd binary
+*.pyo binary
 
 # Python archives
-*.egg			binary
-*.whl			binary
+*.egg binary
+*.whl binary
 
 # Images
-*.png			binary
-*.jpg			binary
-*.jpeg			binary
-*.gif			binary
-*.ico			binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
 
 # Fonts
-*.svg			binary
-*.ttf			binary
-*.woff			binary
-*.woff2			binary
-*.eot			binary
+*.svg binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+*.eot binary
 
 # Archives
-*.gz			binary
-*.zip			binary
-*.7z			binary
-*.rar			binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.rar binary
