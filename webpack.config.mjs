@@ -8,7 +8,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {GenerateSW} from 'workbox-webpack-plugin';
 
 /** @type bool */
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'; // eslint-disable-line n/prefer-global/process
 
 /** @type string */
 const stylesHandler = MiniCssExtractPlugin.loader;
@@ -63,7 +63,7 @@ const config = {
   },
 };
 
-export default () => {
+export default function getConfiguration() {
   if (isProduction) {
     config.mode = 'production';
 
@@ -73,4 +73,4 @@ export default () => {
   }
 
   return config;
-};
+}

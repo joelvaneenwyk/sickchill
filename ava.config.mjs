@@ -3,10 +3,9 @@
 const config = {
   require: ['ejs', '@babel/register', 'setup-browser-env'],
   files: [
-    'tests/js/*.mjs',
     'contrib/setup-browser-env/test/*.test.mjs',
-    'tests/js/*.js',
-    '!tests/**/{fixtures,helpers}/**',
+    '!contrib/setup-browser-env/test/fixtures/*.config.js',
+    'tests/js/*.test.mjs',
   ],
   watchMode: {
     ignoreChanges: ['{dist,debian,coverage,docs,media,test-types,test-tap}/**'],

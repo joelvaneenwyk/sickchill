@@ -22,4 +22,4 @@ export function loadConfiguration(from) {
   return result && result.config;
 }
 
-export const current_browser_env = browserEnv.apply(this, browserEnvConfig(loadConfiguration()));
+export const BrowserEnvironment = browserEnv.apply(this, browserEnvConfig(loadConfiguration()));

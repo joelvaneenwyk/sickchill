@@ -1,5 +1,9 @@
+/**
+ * Test file for 'setup-browser-env' package.
+ */
+/* eslint-disable ava/no-ignored-test-files */
 
-import {dirname, join, resolve} from 'node:path';
+import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 import test from 'ava';
@@ -48,7 +52,7 @@ test('can use none', t => {
 });
 
 test.serial('can load config', t => {
-  const test_directory = dirname(fileURLToPath(import.meta.url));
-  const config = loadConfiguration(join(test_directory, 'fixtures'));
+  const testDirectory = dirname(fileURLToPath(import.meta.url));
+  const config = loadConfiguration(join(testDirectory, 'fixtures'));
   t.deepEqual(config, {ignore: {}});
 });
