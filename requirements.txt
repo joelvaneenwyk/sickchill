@@ -9,3 +9,4 @@ pytest-github-actions-annotate-failures
 pre-commit
 toml
 poethepoet
+black
