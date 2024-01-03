@@ -1,7 +1,7 @@
 {
   "name": "sickchill",
   "version": "4.0.72",
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.0.2+sha256.825003a0f561ad09a3b1ac4a3b3ea6207af2796d54f62a9420520915721f5186",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joelvaneenwyk/SickChill.git"
@@ -70,6 +70,7 @@
     "mem-fs": "^4.0.0",
     "mem-fs-editor": "^11.0.0",
     "mini-css-extract-plugin": "^2.7.6",
+    "npm-check-updates": "^16.14.12",
     "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
     "setup-browser-env": "^0.2.2",
