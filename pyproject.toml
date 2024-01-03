@@ -128,7 +128,7 @@ exclude = [
     "build",
     "dist",
 ]
-inline-quotes = "double"
+# inline-quotes = "double"
 docstring-convention = "numpy"
 ignore = [
     "C812",
@@ -175,7 +175,7 @@ remove_imports = [
 known_first_party = "sickchill"
 extra_standard_library = ["posixpath", "ntpath"]
 use_parentheses = true
-src_paths = ["sickchill", "tests", "SickChill.py", "setup.py"]
+src_paths = ["sickchill", "tests", "SickChill.py"]
 
 [tool.black]
 line-length = 160
@@ -185,7 +185,6 @@ exclude = 'contrib/scmaintools|\.venv|\.git|\.hg|\.mypy_cache|\.tox|\.venv|_buil
 
 [tool.poe.tasks]
 pytest = "pytest"
-yarn = "yarn"
 xo = "xo"
 ava = "ava"
 
@@ -205,8 +204,8 @@ codecov = "codecov"
 lint = ["_black", "_isort", "flake8"]
 format = ["black", "isort", "flake8"]
 
-_poetry_update = { shell = "poetry update", help = "update python dependancies" }
-_yarn_upgrade = { cmd = "yarn upgrade", help = "update yarn dependancies" }
+_poetry_update = { shell = "poetry update", help = "update python dependencies" }
+_yarn_upgrade = { cmd = "corepack yarn && corepack yarn run npm-check-updates -u", help = "update yarn dependencies" }
 _add_locks = { shell = "git add pyproject.toml yarn.lock", help = "Add yarn and poetry lock files" }
 depup = ["_poetry_update", "_yarn_upgrade", "_add_locks"]
 
@@ -218,7 +217,7 @@ update_translations = [
     "babel_compile",
     "po2json",
 ]
-update_dependencies = { shell = "poetry update && yarn upgrade && git add pyproject.toml yarn.lock" }
+update_dependencies = { shell = "poetry update && yarn install && yarn run npm-check-updates -u && git add pyproject.toml yarn.lock" }
 
 test = [{ ref = "lint" }, { cmd = "yarn test" }, { cmd = "pytest" }]
 
@@ -257,6 +256,12 @@ pybabel update
 --ignore-obsolete
 --previous
 """
+
+[tool.poe.tasks.yarn]
+help = "Run yarn using corepack"
+shell = "corepack yarn ${ARGS}"
+interpreter = ["posix", "pwsh"]
+args = [{ name = "ARGS", positional = true, multiple = true }]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4"
@@ -307,3 +312,4 @@ beekeeper-alt = ">=2022.9.3"
 stevedore = { version = "<=3.5.0", python = "<3.8" }
 importlib-metadata = { version = "<5.0.0", python = "<3.8" }
 cacheyou = "^23.2"
+poetry = "^1.7.1"
