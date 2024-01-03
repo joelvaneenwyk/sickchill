@@ -1,0 +1,5 @@
+poetry
+pytest
+pytest-cov
+ruff
+mock

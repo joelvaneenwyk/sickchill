@@ -25,5 +25,16 @@
     "buildx",
     "sickchill"
   ],
-  "ava-runner.experimentalEnabled": true
+  "ava-runner.experimentalEnabled": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.terminal.focusAfterLaunch": true,
+  "python.createEnvironment.contentButton": "show",
+  "application.experimental.rendererProfiling": true,
+  "dotnetAcquisitionExtension.installTimeoutValue": 6000,
+  "python.createEnvironment.trigger": "off",
+  "python.languageServer": "Pylance",
+  "python.missingPackage.severity": "Error",
+  "python.testing.cwd": "tests/",
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": true
 }

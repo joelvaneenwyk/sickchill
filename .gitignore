@@ -16,6 +16,7 @@ movies.db*
 autoProcessTV.cfg
 server.crt
 server.key
+.coverage.*.*
 
 #  SC Test Related   #
 ######################
@@ -25,6 +26,10 @@ server.key
 /tests/cache.db*
 /tests/failed.db
 /tests/data/
+/tests/Downloads/
+/tests/show name/
+/tests/base.crt
+/tests/base.key
 
 #  Compiled source   #
 ######################
@@ -100,11 +105,9 @@ venv
 /Downloads
 
 **/*.so
-lib[23]/bin
-lib[23]/.libs_cffi_backend
-lib[23]/bin
-lib[23]/.libs_cffi_backend
-lib[23]/cffi.libs
+lib3/bin
+lib3/.libs_cffi_backend
+lib3/cffi.libs
 atlassian-ide-plugin.xml
 
 # Readynas
