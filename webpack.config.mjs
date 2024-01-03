@@ -2,7 +2,8 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 //
 
-import {resolve as _resolve} from 'path';
+import {resolve as _resolve} from 'node:path';
+
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {GenerateSW} from 'workbox-webpack-plugin';
 

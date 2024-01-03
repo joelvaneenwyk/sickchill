@@ -1,43 +1,51 @@
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "samverschueren.linter-xo"
-  },
-  "application.experimental.rendererProfiling": true,
-  "ava-runner.experimentalEnabled": true,
-  "cSpell.words": [
-    "buildx",
-    "sickchill"
-  ],
-  "dotnetAcquisitionExtension.installTimeoutValue": 6000,
-  "editor.formatOnSave": true,
-  "eslint.enable": true,
-  "eslint.experimental.useFlatConfig": true,
-  "eslint.format.enable": true,
-  "eslint.lintTask.enable": true,
-  "eslint.options": {
-    "overrideConfigFile": "eslint.config.mjs"
-  },
-  "python.createEnvironment.contentButton": "show",
-  "python.createEnvironment.trigger": "off",
-  "python.languageServer": "Pylance",
-  "python.missingPackage.severity": "Error",
-  "python.terminal.activateEnvInCurrentTerminal": true,
-  "python.terminal.focusAfterLaunch": true,
-  "python.testing.autoTestDiscoverOnSaveEnabled": true,
-  "python.testing.pytestArgs": [
-    "tests"
-  ],
-  "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false,
-  "xo.enable": true,
-  "xo.format.enable": true
+    "[javascript]": {
+        "editor.defaultFormatter": "samverschueren.linter-xo"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "samverschueren.linter-xo"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "samverschueren.linter-xo"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "samverschueren.linter-xo"
+    },
+    "application.experimental.rendererProfiling": true,
+    "ava-runner.experimentalEnabled": true,
+    "cSpell.words": [
+        "buildx",
+        "sickchill"
+    ],
+    "dotnetAcquisitionExtension.installTimeoutValue": 6000,
+    "editor.formatOnSave": true,
+    "eslint.enable": false,
+    "eslint.experimental.useFlatConfig": true,
+    "eslint.format.enable": false,
+    "eslint.lintTask.enable": false,
+    "python.createEnvironment.contentButton": "show",
+    "python.createEnvironment.trigger": "off",
+    "python.languageServer": "Pylance",
+    "python.missingPackage.severity": "Error",
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.terminal.focusAfterLaunch": true,
+    "python.testing.autoTestDiscoverOnSaveEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "xo.enable": true,
+    "xo.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "xo.overrideSeverity": "error",
+    "xo.trace.server": "verbose",
+    "xo.options": {
+        "overrideConfigFile": "xo.config.cjs"
+    },
+    "xo.format.enable": true
 }

@@ -1,11 +1,11 @@
 declare module 'ava' {
-	type IWatchMode = {
+	type WatchMode = {
 		ignoreChanges: string[];
 	};
 
-	type IConfig = {
+	type Configuration = {
 		files: string[];
 		require: string[];
-		watchMode: IWatchMode;
+		watchMode: WatchMode;
 	};
 }
