@@ -22,7 +22,7 @@ concurrency:
 env:
   SLEEP: 60
   DOCKER_BUILDKIT: "1"
-  DOCKER_TEST_TAG: sickchill/sickchill:test
+  DOCKER_TEST_TAG: joelvaneenwyk/sickchill:test
   DOCKER_CONTAINER_NAME: sickchill_test
   TARGET_PLATFORMS: "linux/amd64,linux/arm64"
   CRYPTOGRAPHY_DONT_BUILD_RUST: 1
@@ -191,15 +191,15 @@ jobs:
           restore-keys: ${{ github.workflow }}-environment
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
         with:
           config: /tmp/buildkitd.toml
 
       - name: Test Docker Build
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64
           push: false
@@ -239,7 +239,7 @@ jobs:
           restore-keys: ${{ github.workflow }}-environment
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
         with:
           config: /tmp/buildkitd.toml
 
