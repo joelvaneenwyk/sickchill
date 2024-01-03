@@ -77,7 +77,10 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
   Test:
     strategy:
+      fail-fast: false
       matrix:
+        poetry-version: ["1.7.1"]
+        # os: [ubuntu-22.04, macos-latest, windows-latest]
         os: [ubuntu-latest]
         python-version: ["3.10", "3.11", "3.7", "3.8", "3.9"]
         experimental: [false]
@@ -88,66 +91,80 @@ jobs:
           - os: macos-latest
             python-version: "3.11"
             experimental: false
-      fail-fast: true
-    continue-on-error: ${{ matrix.experimental }}
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
     steps:
       - if: success() && !env.ACT
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 1
           persist-credentials: false
+
       - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10' && !env.ACT
         name: Lint shell scripts
         uses: ludeeus/action-shellcheck@master
         with:
           format: diff
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          version: 1.5.1
-          virtualenvs-path: .venv
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          installer-parallel: false
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "poetry"
-          cache-dependency-path: pyproject.toml
-          check-latest: true
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Setup a local virtual environment (if no poetry.toml file)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+
+      - name: View poetry --help
+        run: poetry --help
+
       - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10'
         name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "16.x"
+
       - run: corepack enable
+
       - name: Install Python dependency tools
         run: |
           poetry run pip install --upgrade setuptools wheel
           poetry run pip install --upgrade pytest-github-actions-annotate-failures
+
       - name: Output tooling environment information
         run: |
           echo -e "$(poetry --version --ansi) is at $(which poetry)\n$(poetry env info --ansi)\n\v$(poetry --ansi run pip -V)"
+
       - name: Install sickchill
         run: |
           poetry install --no-interaction --with dev --with speedups
+
       - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
         name: Run yarn
         run: poetry run poe yarn
+
       - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
         name: Lint Python
         run: poetry run poe lint
+
       - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
         name: Lint and test Javascript
         run: poetry run poe yarn test
+
       - name: Test Python
         run: poetry run poe pytest
+
       - if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
         name: Coverage
         run: poetry run poe codecov --env OS=${{ runner.os }} Interpreter="$(poetry run python -V)" -t ${{ secrets.CODECOV_TOKEN }}
+
   Test-Docker:
     needs: [Environment, Test]
     runs-on: ubuntu-22.04
@@ -158,12 +175,15 @@ jobs:
           path: /tmp/buildkitd.toml
           key: ${{ github.workflow }}-environment
           restore-keys: ${{ github.workflow }}-environment
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:
           config: /tmp/buildkitd.toml
+
       - name: Test Docker Build
         uses: docker/build-push-action@v4
         with:
@@ -178,6 +198,7 @@ jobs:
             SOURCE=1
           allow: |
             security.insecure
+
       - name: Test Docker Image
         run: |
           docker run -d --rm -p 8081:8081 --name ${{ env.DOCKER_CONTAINER_NAME }} ${{ env.DOCKER_TEST_TAG }}
@@ -194,22 +215,26 @@ jobs:
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+
       - name: Cache environment files
         uses: actions/cache@v3
         with:
           path: /tmp/buildkitd.toml
           key: ${{ github.workflow }}-environment
           restore-keys: ${{ github.workflow }}-environment
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:
           config: /tmp/buildkitd.toml
+
       - if: github.actor == 'joelvaneenwyk' && !env.ACT
         name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       - if: github.actor == 'joelvaneenwyk' && !env.ACT
         name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -217,6 +242,7 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - if: github.actor == 'joelvaneenwyk'
         name: Build and Push
         uses: docker/build-push-action@v4
@@ -232,6 +258,7 @@ jobs:
             SOURCE=1
           allow: |
             security.insecure
+
       - if: github.actor == 'joelvaneenwyk'
         name: Snag wheels
         uses: docker/build-push-action@v4
@@ -246,22 +273,26 @@ jobs:
             SOURCE=1
           allow: |
             security.insecure
+
       - if: github.actor == 'joelvaneenwyk'
         name: List wheels directory
         run: |
           ls -R /tmp/sickchill-wheels
+
       - name: Upload linux/amd64 wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: amd64
           path: /tmp/sickchill-wheels/linux_amd64
+
       - name: Upload linux/arm64 wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: arm64
           path: /tmp/sickchill-wheels/linux_arm64
+
       - name: Upload linux/arm/v7 wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: armv7
           path: /tmp/sickchill-wheels/linux_arm_v7
