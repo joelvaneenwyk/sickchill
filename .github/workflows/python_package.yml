@@ -24,7 +24,7 @@ env:
   DOCKER_BUILDKIT: "1"
   DOCKER_TEST_TAG: joelvaneenwyk/sickchill:test
   DOCKER_CONTAINER_NAME: sickchill_test
-  TARGET_PLATFORMS: "linux/amd64,linux/arm64"
+  TARGET_PLATFORMS: "linux/amd64,linux/arm64,linux/arm32v7"
   CRYPTOGRAPHY_DONT_BUILD_RUST: 1
   DEFAULT_USER: joelvaneenwyk
 
@@ -304,8 +304,8 @@ jobs:
           name: arm64
           path: /tmp/sickchill-wheels/linux_arm64
 
-      - name: Upload linux/arm/v7 wheels
+      - name: Upload linux/arm32/v7 wheels
         uses: actions/upload-artifact@v4
         with:
           name: armv7
-          path: /tmp/sickchill-wheels/linux_arm_v7
+          path: /tmp/sickchill-wheels/linux_arm32v7
