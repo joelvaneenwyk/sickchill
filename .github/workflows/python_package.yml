@@ -26,6 +26,7 @@ env:
   DOCKER_CONTAINER_NAME: sickchill_test
   TARGET_PLATFORMS: "linux/amd64,linux/arm64"
   CRYPTOGRAPHY_DONT_BUILD_RUST: 1
+  DEFAULT_USER: joelvaneenwyk
 
 defaults:
   run:
@@ -37,12 +38,14 @@ jobs:
     outputs:
       docker_tags: ${{ steps.docker.outputs.tags }}
       docker_labels: ${{ steps.docker.outputs.labels }}
+
     steps:
       - name: Cache environment files
         uses: actions/cache@v3
         with:
           path: /tmp/buildkitd.toml
           key: ${{ github.workflow }}-environment
+
       - name: Create buildkitd config
         run: |
           echo 'experimental = true' > /tmp/buildkitd.toml
@@ -51,6 +54,7 @@ jobs:
           # echo '[worker.oci]' >> /tmp/buildkitd.toml
           # echo 'max-parallelism = 1' >> /tmp/buildkitd.toml
           cat /tmp/buildkitd.toml
+
       - name: Docker meta
         id: docker
         uses: docker/metadata-action@v4
@@ -75,6 +79,7 @@ jobs:
             type=edge,branch=develop
             type=semver,pattern={{version}},enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
             type=semver,pattern={{major}}.{{minor}},enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+
   Test:
     strategy:
       fail-fast: false
@@ -94,14 +99,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     steps:
-      - if: success() && !env.ACT
+      - if: success() && ${{ !env.ACT }}
         name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           persist-credentials: false
 
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10' && !env.ACT
+      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10' && ${{ !env.ACT }}
         name: Lint shell scripts
         uses: ludeeus/action-shellcheck@master
         with:
@@ -209,6 +214,7 @@ jobs:
           [ $(curl http://0.0.0.0:8081 -s) ~='site-notification-modal' ] && echo "Success!" || (echo "Failed" && exit 1)
           echo "Stopping and removing container..."
           docker stop ${{ env.DOCKER_CONTAINER_NAME }}
+
   Deploy:
     needs: [Environment, Test, Test-Docker]
     runs-on: ubuntu-22.04
@@ -228,14 +234,14 @@ jobs:
         with:
           config: /tmp/buildkitd.toml
 
-      - if: github.actor == 'joelvaneenwyk' && !env.ACT
+      - if: github.actor == ${{ env.DEFAULT_USER }} && ${{ !env.ACT }}
         name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - if: github.actor == 'joelvaneenwyk' && !env.ACT
+      - if: github.actor == ${{ env.DEFAULT_USER }} && ${{ !env.ACT }}
         name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -243,12 +249,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - if: github.actor == 'joelvaneenwyk'
+      - if: github.actor == ${{ env.DEFAULT_USER }}
         name: Build and Push
         uses: docker/build-push-action@v4
         with:
           platforms: ${{ env.TARGET_PLATFORMS }}
-          push: ${{ github.event_name != 'pull_request' && !env.ACT }}
+          push: ${{ github.event_name != 'pull_request' }} && ${{ !env.ACT }}
           tags: ${{ needs.Environment.outputs.docker_tags }}
           labels: ${{ needs.Environment.outputs.docker_labels }}
           target: sickchill-final
@@ -259,7 +265,7 @@ jobs:
           allow: |
             security.insecure
 
-      - if: github.actor == 'joelvaneenwyk'
+      - if: github.actor == ${{ env.DEFAULT_USER }}
         name: Snag wheels
         uses: docker/build-push-action@v4
         with:
@@ -274,7 +280,7 @@ jobs:
           allow: |
             security.insecure
 
-      - if: github.actor == 'joelvaneenwyk'
+      - if: github.actor == ${{ env.DEFAULT_USER }}
         name: List wheels directory
         run: |
           ls -R /tmp/sickchill-wheels
