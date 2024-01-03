@@ -1,7 +1,4 @@
 {
-  "editor.formatOnSave": true,
-  "xo.enable": true,
-  "xo.format.enable": true,
   "[javascript]": {
     "editor.defaultFormatter": "samverschueren.linter-xo"
   },
@@ -14,30 +11,33 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "samverschueren.linter-xo"
   },
-  "eslint.enable": true,
-  "eslint.format.enable": true,
-  "eslint.lintTask.enable": true,
-  "eslint.experimental.useFlatConfig": false,
-  "eslint.options": {
-    "overrideConfigFile": ".eslintrc.cjs"
-  },
+  "application.experimental.rendererProfiling": true,
+  "ava-runner.experimentalEnabled": true,
   "cSpell.words": [
     "buildx",
     "sickchill"
   ],
-  "ava-runner.experimentalEnabled": true,
-  "python.terminal.activateEnvInCurrentTerminal": true,
-  "python.terminal.focusAfterLaunch": true,
-  "python.createEnvironment.contentButton": "show",
-  "application.experimental.rendererProfiling": true,
   "dotnetAcquisitionExtension.installTimeoutValue": 6000,
-  "python.testing.autoTestDiscoverOnSaveEnabled": true,
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.experimental.useFlatConfig": false,
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.cjs"
+  },
+  "python.createEnvironment.contentButton": "show",
   "python.createEnvironment.trigger": "off",
   "python.languageServer": "Pylance",
   "python.missingPackage.severity": "Error",
-  "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.terminal.focusAfterLaunch": true,
+  "python.testing.autoTestDiscoverOnSaveEnabled": true,
   "python.testing.pytestArgs": [
     "tests"
-  ]
+  ],
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "xo.enable": true,
+  "xo.format.enable": true
 }
