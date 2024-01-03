@@ -1,0 +1,73 @@
+{
+  "name": "setup-browser-env",
+  "version": "0.2.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "xo",
+    "test": "nyc ava",
+    "release": "standard-version",
+    "postinstall": "postinstaller",
+    "preuninstall": "postinstaller"
+  },
+  "keywords": [
+    "browser-env",
+    "ava",
+    "mocha",
+    "test",
+    "testing",
+    "browser",
+    "browser testing",
+    "postinstaller"
+  ],
+  "author": "Andreas Pizsa <hopster@gmail.com> (https://github.com/AndreasPizsa)",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
+    "ava": "1.0.1",
+    "coveralls": "^3.0.2",
+    "husky": "^1.2.0",
+    "nyc": "^13.1.0",
+    "standard-version": "^5.0.0",
+    "xo": "^0.23.0"
+  },
+  "xo": {
+    "semicolon": false,
+    "space": true
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "standard-version": {
+    "scripts": {
+      "prerelease": "npm test"
+    }
+  },
+  "dependencies": {
+    "browser-env": "^3.2.5",
+    "cosmiconfig": "^5.0.7",
+    "postinstaller": "0.0.4"
+  },
+  "postinstaller": {
+    "if has devDependencies.ava": {
+      "ava.require[]": "setup-browser-env"
+    },
+    "browser-env": {
+      "globals": [
+        "window",
+        "document"
+      ],
+      "jsdom": {
+        "userAgent": "My User Agent"
+      }
+    }
+  }
+}
