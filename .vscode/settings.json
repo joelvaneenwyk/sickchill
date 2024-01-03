@@ -1,4 +1,17 @@
 {
+  "[ignore]": {
+    "editor.defaultFormatter": "lkrms.inifmt"
+  },
+  "[ini]": {
+    "editor.defaultFormatter": "lkrms.inifmt"
+  },
+  "[shellscript]": {
+    "files.eol": "\n",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.shellcheck": "explicit"
+    },
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "samverschueren.linter-xo"
   },
@@ -23,6 +36,11 @@
   "eslint.experimental.useFlatConfig": false,
   "eslint.format.enable": false,
   "eslint.lintTask.enable": false,
+  "files.associations": {
+    "*.ini": "ini",
+    ".mypy.ini": "ini",
+    "MLTable": "yaml"
+  },
   "python.createEnvironment.contentButton": "show",
   "python.createEnvironment.trigger": "off",
   "python.languageServer": "Pylance",
@@ -35,13 +53,13 @@
   ],
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
-  "xo.statusBar": "Always",
   "xo.enable": true,
   "xo.format.enable": true,
   "xo.options": {
     "overrideConfigFile": "xo.config.cjs"
   },
   "xo.overrideSeverity": "error",
+  "xo.statusBar": "Always",
   "xo.trace.server": "messages",
   "xo.validate": [
     "javascript",

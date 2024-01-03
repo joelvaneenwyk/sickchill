@@ -43,7 +43,7 @@ if [[ ${packages} ]]; then
     i=1
     # shellcheck disable=SC2086
     while read -r; do
-      i=$(( i + 1 ))
+      i=$((i + 1))
       echo ${i}
     done < <(apt-get update && apt-get install ${packages} -y)
   } | whiptail --title "Progress" --gauge "Installing $packages" 8 80 0
@@ -53,7 +53,7 @@ fi
 check_packages
 if [[ ${packages} ]]; then
   whiptail --title "Package Installation Failed" --msgbox \
-"These Packages have failed:
+    "These Packages have failed:
 ${packages}
 Please resolve these issues and restart the install script" 15 66
   exit 1
@@ -92,8 +92,7 @@ if [[ ${#username} -gt 0 ]]; then
 fi
 
 if [[ -d ${LOCATION} ]]; then
-  if whiptail --title 'Rename?' --yesno "${LOCATION} already exists, do you want to rename it? If not, we will exit and you can fix the issues and re-run this script" 8 140;
-  then
+  if whiptail --title 'Rename?' --yesno "${LOCATION} already exists, do you want to rename it? If not, we will exit and you can fix the issues and re-run this script" 8 140; then
     echo "Renaming old SickChill Folder to ${LOCATION}.old"
     if ! mv ${LOCATION} ${LOCATION}.old; then
       whiptail --title "Failed to rename ${LOCATION}" --msgbox "Failed to rename ${LOCATION} to ${LOCATION}.old" 8 128
@@ -123,20 +122,24 @@ if ! sudo -u sickchill -g sickchill python3 -m venv ${LOCATION}; then
   exit 1
 fi
 
-OS_NAME=$(grep -oP "(?:^ID=)(.*)" < /etc/os-release | sed 's|ID=||')
+OS_NAME=$(grep -oP "(?:^ID=)(.*)" </etc/os-release | sed 's|ID=||')
 echo "Checking if we should add an index for your platform OS: ${OS_NAME}"
 INDEXES=()
 
 case "$OS_NAME" in
-    ubuntu)
-            INDEXES+=("--find-links=https://wheel-index.linuxserver.io/ubuntu/");;
-    alpine)
-            INDEXES+=("--find-links=https://wheel-index.linuxserver.io/alpine/")
-            INDEXES+=("--extra-index-url=https://alpine-wheels.github.io/index");;
-    raspbian|osmc)
-            INDEXES+=("--extra-index-url=https://www.piwheels.org/simple");;
-        *)
-            echo "No extra indexes needed that we know of";;
+ubuntu)
+  INDEXES+=("--find-links=https://wheel-index.linuxserver.io/ubuntu/")
+  ;;
+alpine)
+  INDEXES+=("--find-links=https://wheel-index.linuxserver.io/alpine/")
+  INDEXES+=("--extra-index-url=https://alpine-wheels.github.io/index")
+  ;;
+raspbian | osmc)
+  INDEXES+=("--extra-index-url=https://www.piwheels.org/simple")
+  ;;
+*)
+  echo "No extra indexes needed that we know of"
+  ;;
 esac
 
 WHEELS=("pip" "setuptools" "wheel")
@@ -155,7 +158,7 @@ fi
 
 function download_service_file() {
   export SERVICE_FILE=${2}
-  if ! curl https://raw.githubusercontent.com/joelvaneenwyk/SickChill/main/contrib/runscripts/"$1" > "$2"; then
+  if ! curl https://raw.githubusercontent.com/joelvaneenwyk/SickChill/main/contrib/runscripts/"$1" >"$2"; then
     whiptail --title "Failed to download ${1}" --msgbox "Failed to download ${1}" 8 128
     exit 1
   fi
@@ -207,7 +210,7 @@ fi
 
 # Finish by explaining the script is finished and give them the relevant IP addresses
 whiptail --title Complete --msgbox \
-"Check that everything has been set up correctly by going to:
+  "Check that everything has been set up correctly by going to:
 
           Internal IP: http://$internal_ip:8081
                              OR

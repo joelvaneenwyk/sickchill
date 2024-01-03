@@ -9,6 +9,11 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
+[*.{sh,bash}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+
 [*.{js,jsx,json,mjs,cjs,ts}]
 indent_style = space
 indent_size = 2

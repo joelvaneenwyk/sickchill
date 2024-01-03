@@ -2,7 +2,7 @@
 
 # Handle line endings automatically for files detected as text
 # and leave all files detected as binary untouched.
-* text=auto
+* text=auto eol=lf
 
 #
 # The above will handle all files NOT found below
@@ -30,6 +30,7 @@ init.* text
 *.h text
 *.in text
 *.hcl text
+*.sh text
 
 # Python Source files
 *.pxd text
