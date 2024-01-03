@@ -141,7 +141,7 @@ jobs:
 
       - run: corepack enable
 
-      - if: success() && ${{ matrix.os == 'ubuntu-latest' }}
+      - if: ${{ matrix.os == 'ubuntu-latest' && success() }}
         name: Lint shell scripts
         uses: ludeeus/action-shellcheck@master
         with:
@@ -160,15 +160,15 @@ jobs:
         run: |
           poetry install --no-interaction --with dev --with speedups
 
-      - if: success() && ${{ matrix.run-additional-tests}}
+      - if: ${{ matrix.run-additional-tests && success() }}
         name: Run yarn
         run: poetry run poe yarn
 
-      - if: success() && ${{ matrix.run-additional-tests}}
+      - if: ${{ matrix.run-additional-tests && success() }}
         name: Lint Python
         run: poetry run poe lint
 
-      - if: success() && ${{ matrix.run-additional-tests}}
+      - if: ${{ matrix.run-additional-tests && success() }}
         name: Lint and test Javascript
         run: poetry run poe yarn test
 
