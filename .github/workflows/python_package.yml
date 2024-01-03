@@ -209,9 +209,7 @@ jobs:
           target: sickchill-final
           cache-from: type=gha
           build-args: |
-            SOURCE=1
-          allow: |
-            security.insecure
+            SOURCE=GitHubAction
 
       - name: Test Docker Image
         run: |

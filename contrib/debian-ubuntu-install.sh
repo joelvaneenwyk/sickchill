@@ -155,7 +155,7 @@ fi
 
 function download_service_file() {
   export SERVICE_FILE=${2}
-  if ! curl https://raw.githubusercontent.com/SickChill/SickChill/master/contrib/runscripts/"$1" > "$2"; then
+  if ! curl https://raw.githubusercontent.com/joelvaneenwyk/SickChill/main/contrib/runscripts/"$1" > "$2"; then
     whiptail --title "Failed to download ${1}" --msgbox "Failed to download ${1}" 8 128
     exit 1
   fi

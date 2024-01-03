@@ -4,12 +4,12 @@
 # -v mount_point:/mount_point \
 # -v /docker/sickchill/data:/data \
 # -v /etc/localtime:/etc/localtime:ro
-# -p 8080:8081 sickchill/sickchill
+# -p 8080:8081 joelvaneenwyk/sickchill
 
 FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye as base
 
 LABEL org.opencontainers.image.source="https://github.com/joelvaneenwyk/sickchill"
-LABEL maintainer="miigotu@gmail.com"
+LABEL maintainer="joelvaneenwyk@gmail.com"
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONIOENCODING="UTF-8"
@@ -29,28 +29,25 @@ ENV POETRY_HOME="$HOME/.poetry"
 ENV PATH=$POETRY_VIRTUALENVS_PATH/local/bin:$POETRY_VIRTUALENVS_PATH/bin:$PATH
 
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
-# ENV SODIUM_INSTALL=system
 
 ENV PIP_DISABLE_PIP_VERSION_CHECK=on
 ENV PIP_DEFAULT_TIMEOUT=100
 ENV PIP_EXTRA_INDEX_URL=$PIP_EXTRA_INDEX_URL
 
-# TODO: Add a user and drop privileges, preferablty from --user argument
-
 RUN mkdir -m 777 -p /sickchill "$POETRY_CACHE_DIR"
 
 RUN sed -i -e "s/ main/ main contrib non-free/gm" /etc/apt/sources.list
 RUN apt-get update -qq && apt-get upgrade -yqq && \
-  apt-get install -yqq curl libxml2 libxslt1.1 libffi7 libssl1.1 libmediainfo0v5 mediainfo unrar && \
-  apt-get clean -yqq && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get install -yqq curl libxml2 libxslt1.1 libffi7 libssl1.1 libmediainfo0v5 mediainfo unrar && \
+    apt-get clean -yqq && \
+    rm -rf /var/lib/apt/lists/*
 
 FROM base as builder
 RUN apt-get update -qq && apt-get upgrade -yqq && \
-  apt-get install -yqq build-essential python3-distutils-extra python3-dev \
-  libxml2-dev libxslt1-dev libffi-dev libssl-dev libmediainfo-dev findutils sed && \
-  apt-get clean -yqq && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get install -yqq build-essential python3-distutils-extra python3-dev \
+    libxml2-dev libxslt1-dev libffi-dev libssl-dev libmediainfo-dev findutils sed && \
+    apt-get clean -yqq && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV HOME="/root/"
 ENV CARGO_HOME="/root/.cargo"
@@ -81,21 +78,21 @@ COPY . /sickchill/
 
 # https://github.com/rust-lang/cargo/issues/8719#issuecomment-1253575253
 RUN --mount=type=tmpfs,target="$CARGO_HOME" if [ -z "$SOURCE" ]; then \
-  pip install --upgrade "sickchill[speedups]"; \
-  else \
-  pip install --upgrade poetry && poetry run pip install -U setuptools-rust pycparser && \
-  poetry build --no-interaction --no-ansi && pip install --upgrade --find-links=./dist "sickchill[speedups]"; \
-  fi
+    pip install --upgrade "sickchill[speedups]"; \
+    else \
+    pip install --upgrade poetry && poetry run pip install -U setuptools-rust pycparser && \
+    poetry build --no-interaction --no-ansi && pip install --upgrade --find-links=./dist "sickchill[speedups]"; \
+    fi
 
 RUN mkdir -m 777 /sickchill-wheels && \
-  pip download sickchill --dest /sickchill-wheels && \
-  rm -rf /sickchill-wheels/*none-any.whl && \
-  rm -rf /sickchill-wheels/*.gz;
+    pip download sickchill --dest /sickchill-wheels && \
+    rm -rf /sickchill-wheels/*none-any.whl && \
+    rm -rf /sickchill-wheels/*.gz;
 
 RUN if [ -z "$SOURCE" ]; then \
-  rm -rf /sickchill-wheels/sickchill*.whl && \
-  cp dist/sickchill*.whl /sickchill-wheels/; \
-  fi
+    rm -rf /sickchill-wheels/sickchill*.whl && \
+    cp dist/sickchill*.whl /sickchill-wheels/; \
+    fi
 
 FROM scratch AS sickchill-wheels
 COPY --from=builder /sickchill-wheels /
@@ -114,4 +111,4 @@ CMD ["sickchill", "--nolaunch", "--datadir", "/data", "--port", "8081"]
 EXPOSE 8081
 
 HEALTHCHECK --interval=5m --timeout=3s \
-  CMD bash -c 'if [ $(curl -f http://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; elif [ $(curl -f https://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; else echo 1; fi'
+    CMD bash -c 'if [ $(curl -f http://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; elif [ $(curl -f https://localhost:8081/ui/get_messages -s) == "{}" ]; then echo "sickchill is alive"; else echo 1; fi'
