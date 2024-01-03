@@ -16,9 +16,14 @@ end_of_line = lf
 
 [*.{js,jsx,json,mjs,cjs,ts}]
 indent_style = space
-indent_size = 2
+indent_size = 4
 
 # Matches configuration files for services like Travis, AppVeyor and Codecov
 [*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+[{package.json, bower.json, webpack.config.js}]
+charset = utf-8
 indent_style = space
 indent_size = 2
