@@ -25,6 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
+    "@babel/register": "^7.23.7",
     "@popperjs/core": "^2.11.8",
     "@webpack-cli/generators": "^3.0.7",
     "ava": "^6.0.1",
@@ -71,6 +72,7 @@
     "mini-css-extract-plugin": "^2.7.6",
     "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
+    "setup-browser-env": "^0.2.2",
     "snyk": "^1.1267.0",
     "style-loader": "^3.3.3",
     "toml": "^3.0.0",
@@ -82,50 +84,13 @@
     "yarn-audit-fix": "^10.0.7",
     "yarn-minify": "^1.0.1"
   },
-  "ava": {
-    "require": [
-      "esm",
-      "./tests/js/helpers/setup-browser-env.js"
-    ],
-    "files": [
-      "tests/js/**/*.js",
-      "!tests/js/helpers/setup-browser-env.js"
-    ]
-  },
-  "xo": {
-    "space": 4,
-    "rules": {
-      "unicorn/filename-case": "off",
-      "unicorn/prefer-node-append": "off"
-    },
-    "esnext": true,
-    "envs": [
-      "browser"
-    ],
+  "browser-env": {
     "globals": [
-      "_",
-      "scRoot",
-      "jQuery",
-      "$",
-      "metaToBool",
-      "getMeta",
-      "PNotify",
-      "themeSpinner",
-      "anonURL",
-      "Gettext",
-      "gt",
-      "_n",
-      "latinize"
+      "window",
+      "document"
     ],
-    "ignores": [
-      "core.min.js",
-      "vendor.min.js",
-      "lib/**/*",
-      "Gruntfile.js",
-      "sickchill/gui/slick/js/lib/*",
-      "tests/js/index.js",
-      "frontend/static/*",
-      "webpack.config.js"
-    ]
+    "jsdom": {
+      "userAgent": "My User Agent"
+    }
   }
 }
