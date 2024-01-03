@@ -2,6 +2,7 @@ const config = {
   require: ['ejs', '@babel/register', 'setup-browser-env'],
   files: [
     'tests/js/*.mjs',
+    'contrib/setup-browser-env/test/*.test.mjs',
     'tests/js/*.js',
     '!tests/**/{fixtures,helpers}/**',
   ],

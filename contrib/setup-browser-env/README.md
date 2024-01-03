@@ -4,21 +4,21 @@
 
 > Simplifies simulating a global browser environment using [browser-env][].
 
-# Motivation
+## Motivation
 
 `setup-browser-env` simplifies simulating a global browser environment using [browser-env][] with zero configuration, keeping your project structure lean, clean & organized.
 
-# Features
+## Features
 
-+   ✅ **Compatible.** Works with [ava][], [mocha][] and everything else.
-+   ✅ **Zero Configuration** for ava. `npm add`, done.
-+   ✅ **Configurable.** via `package.json` or `browser-env.{js, json, yaml}`
-+   ✅ **Reliable.** 100% Code Coverage.
-+   ✅ **Free.** MIT License.
++ ✅ **Compatible.** Works with [ava][], [mocha][] and everything else.
++ ✅ **Zero Configuration** for ava. `npm add`, done.
++ ✅ **Configurable.** via `package.json` or `browser-env.{js, json, yaml}`
++ ✅ **Reliable.** 100% Code Coverage.
++ ✅ **Free.** MIT License.
 
-# Usage
+## Usage
 
-## Install
+### Install
 
 ```sh
 npm add -D setup-browser-env
@@ -26,12 +26,11 @@ npm add -D setup-browser-env
 
 ### ava
 
-##### Automatic configuration
+#### Automatic configuration
 
 If you’re using `ava` as a `devDependency`, installing `setup-browser-env` will configure ava automatically (using [postinstaller](http://github.com/postinstaller/postinstaller)).
 
-
-##### Manual configuration
+#### Manual configuration
 
 ```json
 // package.json
@@ -46,14 +45,14 @@ If you’re using `ava` as a `devDependency`, installing `setup-browser-env` wil
 
 ### mocha
 
-##### Manual configuration
+#### Manual configuration
 
 ```js
 # mocha.opts
 --require setup-browser-env
 ```
 
-## Advanced Configuration
+#### Advanced Configuration
 
 `setup-browser-env` runs out of the box without further configuration. You can still set options if needed in your `package.json` or a  `browser-env.{js,json,yaml}` config file.
 
@@ -61,7 +60,7 @@ To learn about all configuration options, please see [browser-env][] and [jsdom]
 
 #### package.json
 
-```
+```json
 {
   "browser-env": {
     "globals": ["window", "document"],
@@ -76,13 +75,13 @@ To learn about all configuration options, please see [browser-env][] and [jsdom]
 
 Pass only the of name global properties without setting jsdom options:
 
-```
+```json
 {
   "browser-env": "window document"
 }
 ```
 
-```
+```json
 {
   "browser-env": ["window", "document"]
 }
@@ -90,7 +89,7 @@ Pass only the of name global properties without setting jsdom options:
 
 Pass only jsdom options without setting the of name global properties:
 
-```
+```json
 {
   "browser-env": {
     "userAgent": "My User Agent"

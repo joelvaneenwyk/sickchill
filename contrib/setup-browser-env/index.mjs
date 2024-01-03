@@ -1,4 +1,7 @@
-function browserEnvConfig(config) {
+import browserEnv from 'browser-env'
+import { cosmiconfigSync } from 'cosmiconfig'
+
+export function browserEnvConfig(config) {
   if (typeof config === 'string') {
     config = config.split(/(?:\s*,\s*)|\s+/)
   }
@@ -10,18 +13,9 @@ function browserEnvConfig(config) {
   return args.length > 0 ? args : undefined
 }
 
-function loadConfiguration(from) {
-  const {searchSync} = require('cosmiconfig')('browser-env')
-  const result = searchSync(from)
+export function loadConfiguration(from) {
+  const result = cosmiconfigSync('browser-env').search(from)
   return result && result.config
 }
 
-module.exports = require('browser-env').apply(
-  this,
-  browserEnvConfig(loadConfiguration())
-)
-
-Object.assign(module.exports, {
-  browserEnvConfig,
-  loadConfiguration
-})
+export const current_browser_env = browserEnv.apply(this, browserEnvConfig(loadConfiguration()))

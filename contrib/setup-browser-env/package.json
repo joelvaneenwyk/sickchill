@@ -2,7 +2,7 @@
   "name": "setup-browser-env",
   "version": "0.2.2",
   "description": "",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "pretest": "xo",
     "test": "nyc ava",
@@ -32,10 +32,6 @@
     "nyc": "^15.1.0",
     "standard-version": "^9.5.0",
     "xo": "^0.56.0"
-  },
-  "xo": {
-    "semicolon": false,
-    "space": true
   },
   "commitlint": {
     "extends": [

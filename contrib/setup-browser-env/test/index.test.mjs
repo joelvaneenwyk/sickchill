@@ -1,5 +1,9 @@
-const test = require('ava')
-const {browserEnvConfig, loadConfiguration} = require('..')
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import test from 'ava'
+import { browserEnvConfig, loadConfiguration } from '../index.mjs'
+import { join, resolve } from 'path'
 
 test('can use a string', t => {
   const global = 'window document'
@@ -43,6 +47,7 @@ test('can use none', t => {
 })
 
 test.serial('can load config', t => {
-  const config = loadConfiguration(require('path').join(__dirname, 'fixtures'))
+  const test_directory = dirname(fileURLToPath(import.meta.url));
+  const config = loadConfiguration(join(test_directory, 'fixtures'))
   t.deepEqual(config, {ignore: {}})
 })
