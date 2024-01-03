@@ -31,10 +31,13 @@
   "python.createEnvironment.contentButton": "show",
   "application.experimental.rendererProfiling": true,
   "dotnetAcquisitionExtension.installTimeoutValue": 6000,
+  "python.testing.autoTestDiscoverOnSaveEnabled": true,
   "python.createEnvironment.trigger": "off",
   "python.languageServer": "Pylance",
   "python.missingPackage.severity": "Error",
-  "python.testing.cwd": "tests/",
   "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": true
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": [
+    "tests"
+  ]
 }
