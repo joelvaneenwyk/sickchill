@@ -87,30 +87,32 @@ jobs:
         poetry-version: ["1.7.1"]
         # os: [ubuntu-22.04, macos-latest, windows-latest]
         os: [ubuntu-latest]
-        python-version: ["3.11", "3.10", "3.9", "3.8"]
+        python-version: ["3.11", "3.9", "3.8"]
         experimental: [false]
+        additional-tests: [false]
         include:
           - os: windows-latest
             python-version: "3.11"
             experimental: false
+            additional-tests: false
           - os: macos-latest
             python-version: "3.11"
             experimental: false
+            additional-tests: false
+          - os: ubuntu-latest
+            python-version: "3.10"
+            experimental: false
+            additional-tests: true
+
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
+
     steps:
-      - if: success() && ${{ !env.ACT }}
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           persist-credentials: false
-
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10' && ${{ !env.ACT }}
-        name: Lint shell scripts
-        uses: ludeeus/action-shellcheck@master
-        with:
-          format: diff
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
@@ -122,7 +124,7 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
 
-      - name: Setup a local virtual environment (if no poetry.toml file)
+      - name: Setup local virtual environment
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
@@ -130,13 +132,18 @@ jobs:
       - name: View poetry --help
         run: poetry --help
 
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10'
-        name: Set up Node
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: "16.x"
 
       - run: corepack enable
+
+      - if: success() && ${{ matrix.os == 'ubuntu-latest' }}
+        name: Lint shell scripts
+        uses: ludeeus/action-shellcheck@master
+        with:
+          format: diff
 
       - name: Install Python dependency tools
         run: |
@@ -151,15 +158,15 @@ jobs:
         run: |
           poetry install --no-interaction --with dev --with speedups
 
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
+      - if: success() && ${{ matrix.additional-tests}}
         name: Run yarn
         run: poetry run poe yarn
 
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
+      - if: success() && ${{ matrix.additional-tests}}
         name: Lint Python
         run: poetry run poe lint
 
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
+      - if: success() && ${{ matrix.additional-tests}}
         name: Lint and test Javascript
         run: poetry run poe yarn test
 
@@ -220,7 +227,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
 
       - name: Cache environment files
         uses: actions/cache@v3
@@ -236,14 +243,14 @@ jobs:
 
       - if: github.actor == ${{ env.DEFAULT_USER }} && ${{ !env.ACT }}
         name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - if: github.actor == ${{ env.DEFAULT_USER }} && ${{ !env.ACT }}
         name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ secrets.DOCKER_USERNAME }}
