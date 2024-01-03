@@ -4,11 +4,12 @@
 
 import react from '@eslint-react/eslint-plugin';
 import pkg from 'eslint-config-xo';
-const { rules: xo_rules } = pkg;
+
+const {rules: xo_rules} = pkg;
 
 /** @type {import("eslint").Linter.FlatConfig[]} */
 const config = [{
-  // env: {
+  // Env: {
   //   browser: true,
   //   es2021: true,
   // },
@@ -36,13 +37,13 @@ const config = [{
   },
 },
   plugins: {
-    react: react
+    react,
   },
   rules: {
     indent: 'off',
     xo_rules,
   },
-  ...react.configs.recommended
+  ...react.configs.recommended,
 }];
 
 export default config;
