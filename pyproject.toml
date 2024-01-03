@@ -259,9 +259,11 @@ pybabel update
 
 [tool.poe.tasks.yarn]
 help = "Run yarn using corepack"
-shell = "corepack yarn ${ARGS}"
+shell = "corepack yarn ${command}"
 interpreter = ["posix", "pwsh"]
-args = [{ name = "ARGS", positional = true, multiple = true }]
+args = [
+    { name = "command", positional = true, multiple = false, default = "install" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4"

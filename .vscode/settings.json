@@ -20,11 +20,11 @@
   "dotnetAcquisitionExtension.installTimeoutValue": 6000,
   "editor.formatOnSave": true,
   "eslint.enable": true,
-  "eslint.experimental.useFlatConfig": false,
+  "eslint.experimental.useFlatConfig": true,
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.options": {
-    "overrideConfigFile": ".eslintrc.cjs"
+    "overrideConfigFile": "eslint.config.mjs"
   },
   "python.createEnvironment.contentButton": "show",
   "python.createEnvironment.trigger": "off",

@@ -1,3 +1,7 @@
+/**
+ *
+ */
+ 
 import browserEnv from 'browser-env'
 import { cosmiconfigSync } from 'cosmiconfig'
 

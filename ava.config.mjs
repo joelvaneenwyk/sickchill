@@ -1,3 +1,5 @@
+
+/** @type {import('ava').IConfig} */
 const config = {
   require: ['ejs', '@babel/register', 'setup-browser-env'],
   files: [

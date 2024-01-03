@@ -38,6 +38,7 @@
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
     "@babel/register": "^7.23.7",
+    "@eslint-react/eslint-plugin": "^0.10.2",
     "@popperjs/core": "^2.11.8",
     "@webpack-cli/generators": "^3.0.7",
     "@yarnpkg/cli": "^4.0.2",
