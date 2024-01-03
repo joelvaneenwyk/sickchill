@@ -65,18 +65,6 @@ module.exports = {
       },
     },
     {
-      files: 'sickchill/gui/**/*.(c|m)(j|t)s',
-      rules: {
-        indent: [
-          'error',
-          4,
-          {
-            SwitchCase: 1,
-          },
-        ],
-      },
-    },
-    {
       files: 'test/**',
       rules: {
         'import/no-anonymous-default-export': 'off',

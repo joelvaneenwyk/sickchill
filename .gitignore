@@ -1,8 +1,8 @@
 #  SC User Related   #
 ######################
 /cache/
-/gui/slick/cache
-/sickchill/gui/slick/cache
+/gui/slick/cache/
+/sickchill/gui/slick/cache/
 /Logs/
 /data/
 restore/
@@ -37,6 +37,7 @@ server.key
 
 #  IDE specific      #
 ######################
+__pycache__/
 *.bak
 *.tmp
 *.wpr

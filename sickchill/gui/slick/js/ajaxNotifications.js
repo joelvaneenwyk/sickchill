@@ -13,31 +13,31 @@ PNotify.desktop.permission();
 PNotify.prototype.options.desktop = {desktop: !0, icon: scRoot + '/images/ico/favicon-196.png'};
 
 function displayPNotify(type, title, message, id) {
-    new PNotify({ // eslint-disable-line no-new
-        desktop: {
-            tag: id,
-        },
-        type,
-        title,
-        text: message.replaceAll(/<br[\s/]*(?:\s[^>]*)?>/gi, '\n')
-            .replaceAll(/<\/?b(?:\s[^>]*)?>/gi, '*')
-            .replaceAll(/<i(?:\s[^>]*)?>/gi, '[').replaceAll(/<\/i>/gi, ']')
-            .replaceAll(/<(?:\/?ul|\/li)(?:\s[^>]*)?>/gi, '').replaceAll(/<li(?:\s[^>]*)?>/gi, '\n* '),
-    });
+  new PNotify({ // eslint-disable-line no-new
+    desktop: {
+      tag: id,
+    },
+    type,
+    title,
+    text: message.replaceAll(/<br[\s/]*(?:\s[^>]*)?>/gi, '\n')
+      .replaceAll(/<\/?b(?:\s[^>]*)?>/gi, '*')
+      .replaceAll(/<i(?:\s[^>]*)?>/gi, '[').replaceAll(/<\/i>/gi, ']')
+      .replaceAll(/<(?:\/?ul|\/li)(?:\s[^>]*)?>/gi, '').replaceAll(/<li(?:\s[^>]*)?>/gi, '\n* '),
+  });
 }
 
 function checkNotifications() {
-    $.getJSON(scRoot + '/ui/get_messages', data => {
-        $.each(data, (name, data) => {
-            displayPNotify(data.type, data.title, data.message, data.hash);
-        });
+  $.getJSON(scRoot + '/ui/get_messages', data => {
+    $.each(data, (name, data) => {
+      displayPNotify(data.type, data.title, data.message, data.hash);
     });
-    setTimeout(checkNotifications, 3000);
+  });
+  setTimeout(checkNotifications, 3000);
 }
 
 $(document).ready(() => {
-    checkNotifications();
-    if (test) {
-        displayPNotify('notice', 'test', 'test<br><i class="test-class">hello <b>world</b></i><ul><li>item 1</li><li>item 2</li></ul>', 'notification-test');
-    }
+  checkNotifications();
+  if (test) {
+    displayPNotify('notice', 'test', 'test<br><i class="test-class">hello <b>world</b></i><ul><li>item 1</li><li>item 2</li></ul>', 'notification-test');
+  }
 });

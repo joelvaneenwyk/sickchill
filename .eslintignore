@@ -3,3 +3,8 @@ dist/**/*
 Gruntfile.js
 frontend/static/*.js
 sickchill/**/lib/*.js
+cache/
+.venv/
+.pytest_cache/
+__pycache__/
+node_modules/
