@@ -23,7 +23,7 @@ indent_size = 4
 indent_style = space
 indent_size = 2
 
-[{package.json, bower.json, webpack.config.js}]
+[{package.json,bower.json,webpack.config.mjs}]
 charset = utf-8
 indent_style = space
 indent_size = 2

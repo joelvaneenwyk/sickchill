@@ -1,5 +1,9 @@
 @echo off
 setlocal EnableExtensions
+    call npm install -g npm-check-updates
+    call sudo corepack enable
+    call corepack yarn install
+
     call sudo py -3 -m pip install --upgrade pip
     call py -3 -m pip install --user -r "%~dp0requirements.txt"
 

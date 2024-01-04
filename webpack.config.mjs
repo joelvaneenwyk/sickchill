@@ -1,21 +1,18 @@
+/* eslint-disable unicorn/prefer-node-protocol */
 //
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 //
 
-import {join, dirname} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import path from 'path';
+import {fileURLToPath} from 'url';
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {GenerateSW} from 'workbox-webpack-plugin';
 
-const fileUrl = fileURLToPath(import.meta.url);
-const projectRoot = dirname(fileUrl);
-
-/** @type {string} */
-const stylesHandler = MiniCssExtractPlugin.loader;
+export const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('webpack').Configuration} */
-export const config = {
+const config = {
   // eslint-disable-next-line n/prefer-global/process
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   resolve: {
@@ -36,11 +33,11 @@ export const config = {
       },
       {
         test: /\.css$/i,
-        use: [stylesHandler, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [stylesHandler, 'css-loader', 'sass-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(?:eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
@@ -51,53 +48,53 @@ export const config = {
 };
 
 /** @type {import('webpack').Configuration} */
-export const configurations = {
+const configurations = {
   ...config,
   name: 'config',
-  context: join(projectRoot, 'frontend', 'config', 'src', 'js'),
+  context: path.resolve(projectRoot, 'frontend', 'config', 'src', 'js'),
   entry: {
     config: ['./config.jsx'],
   },
   output: {
-    path: join(projectRoot, 'frontend', 'config', 'static'),
+    path: path.resolve(projectRoot, 'frontend', 'config', 'static'),
     filename: '[name].js',
-    publicPath: join(projectRoot, 'static'),
+    publicPath: path.resolve(projectRoot, 'static'),
   },
 };
 
 /** @type {import('webpack').Configuration} */
-export const shows = {
+const shows = {
   ...config,
   name: 'shows',
-  context: join(projectRoot, 'frontend', 'shows', 'src', 'js'),
+  context: path.resolve(projectRoot, 'frontend', 'shows', 'src', 'js'),
   entry: {
     shows: ['./shows.jsx'],
     show: ['./show.jsx'],
   },
   output: {
-    path: join(projectRoot, 'frontend', 'shows', 'static'),
+    path: path.resolve(projectRoot, 'frontend', 'shows', 'static'),
     filename: '[name].js',
-    publicPath: join(projectRoot, 'static'),
+    publicPath: path.join(projectRoot, 'static'),
   },
 };
 
 /** @type {import('webpack').Configuration} */
-export const movies = {
+const movies = {
   ...config,
   name: 'movies',
-  context: join(projectRoot, 'frontend', 'movies', 'src', 'js'),
+  context: path.resolve(projectRoot, 'frontend', 'movies', 'src', 'js'),
   entry: {
     movies: ['./movies.jsx'],
     movie: ['./movie.jsx'],
   },
   output: {
-    path: join(projectRoot, 'frontend', 'movies', 'static'),
+    path: path.resolve(projectRoot, 'frontend', 'movies', 'static'),
     filename: '[name].js',
-    publicPath: join(projectRoot, 'static'),
+    publicPath: path.resolve(projectRoot, 'static'),
   },
 };
 
-export default function getConfiguration() {
+function getConfiguration() {
   const outputs = [configurations, shows, movies];
   for (const item of outputs) {
     if (item.mode === 'production') {
@@ -108,3 +105,8 @@ export default function getConfiguration() {
 
   return config;
 }
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  ...getConfiguration(),
+};
