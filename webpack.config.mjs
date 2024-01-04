@@ -47,55 +47,30 @@ const config = {
   },
 };
 
-/** @type {import('webpack').Configuration} */
-const configurations = {
-  ...config,
-  name: 'config',
-  context: path.resolve(projectRoot, 'frontend', 'config', 'src', 'js'),
-  entry: {
-    config: ['./config.jsx'],
-  },
-  output: {
-    path: path.resolve(projectRoot, 'frontend', 'config', 'static'),
-    filename: '[name].js',
-    publicPath: path.resolve(projectRoot, 'static'),
-  },
-};
+function createConfiguration(folder, optionalEntry = null) {
+  /** @type {import('webpack').Configuration} */
+  const entry = {
+    ...config,
+    name: folder,
+    context: path.resolve(projectRoot, 'frontend', folder, 'src', 'js'),
+    entry: {},
+    output: {
+      path: path.resolve(projectRoot, 'frontend', folder, 'static'),
+      filename: '[name].js',
+      publicPath: path.resolve(projectRoot, 'static'),
+    },
+  };
 
-/** @type {import('webpack').Configuration} */
-const shows = {
-  ...config,
-  name: 'shows',
-  context: path.resolve(projectRoot, 'frontend', 'shows', 'src', 'js'),
-  entry: {
-    shows: ['./shows.jsx'],
-    show: ['./show.jsx'],
-  },
-  output: {
-    path: path.resolve(projectRoot, 'frontend', 'shows', 'static'),
-    filename: '[name].js',
-    publicPath: path.join(projectRoot, 'static'),
-  },
-};
+  entry.entry[folder] = [`./${folder}.jsx`];
+  if (optionalEntry) {
+    entry.entry[optionalEntry] = [`./${optionalEntry}.jsx`];
+  }
 
-/** @type {import('webpack').Configuration} */
-const movies = {
-  ...config,
-  name: 'movies',
-  context: path.resolve(projectRoot, 'frontend', 'movies', 'src', 'js'),
-  entry: {
-    movies: ['./movies.jsx'],
-    movie: ['./movie.jsx'],
-  },
-  output: {
-    path: path.resolve(projectRoot, 'frontend', 'movies', 'static'),
-    filename: '[name].js',
-    publicPath: path.resolve(projectRoot, 'static'),
-  },
-};
+  return entry;
+}
 
 function getConfiguration() {
-  const outputs = [configurations, shows, movies];
+  const outputs = [createConfiguration('config'), createConfiguration('shows', 'show'), createConfiguration('movies', 'movie')];
   for (const item of outputs) {
     if (item.mode === 'production') {
       const serviceWorker = new GenerateSW();

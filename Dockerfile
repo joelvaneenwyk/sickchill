@@ -6,6 +6,7 @@
 # -v /etc/localtime:/etc/localtime:ro
 # -p 8080:8081 joelvaneenwyk/sickchill
 
+ARG TARGETPLATFORM=linux/amd64
 FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye as base
 
 LABEL org.opencontainers.image.source="https://github.com/joelvaneenwyk/sickchill"

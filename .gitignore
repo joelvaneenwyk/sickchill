@@ -4,6 +4,8 @@
 
 .pypirc
 out.txt
+workbox-*.js
+service-worker.js
 
 #  SC User Related   #
 ######################
