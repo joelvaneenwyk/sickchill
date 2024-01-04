@@ -46,7 +46,10 @@ class QualityStringTests(unittest.TestCase):
             "Test.Show.S01E02.BDRIP.WS.DiVX-GROUP",
             "Test.Show.S01E02.BDRIP.WS.x264-GROUP",
         ],
-        "hd_tv": ["Test.Show.S01E02.720p.HDTV.x264-GROUP", "Test.Show.S01E02.HR.WS.PDTV.x264-GROUP"],
+        "hd_tv": [
+            "Test.Show.S01E02.720p.HDTV.x264-GROUP",
+            "Test.Show.S01E02.HR.WS.PDTV.x264-GROUP",
+        ],
         "raw_hd_tv": [
             "Test.Show.S01E02.720p.HDTV.DD5.1.MPEG2-GROUP",
             "Test.Show.S01E02.1080i.HDTV.DD2.0.MPEG2-GROUP",
@@ -93,7 +96,8 @@ class QualityStringTests(unittest.TestCase):
             "Test.Show.S01E02.1080p.iTunes.H.264.AAC-GROUP",
             "Test Show S01E02 1080p iTunes H 264 AAC-GROUP",
             "Test_Show_S01E02_1080p_iTunes_H_264_AAC-GROUP",
-            "Test.Show.S01E02.Episode.Name.1080p.Itunes.WEB-DL.x264" "Test.Show.S01E02.Episode.Name.1080p.ItunesHD.WEB-DL.x264",
+            "Test.Show.S01E02.Episode.Name.1080p.Itunes.WEB-DL.x264"
+            "Test.Show.S01E02.Episode.Name.1080p.ItunesHD.WEB-DL.x264",
             "Test.Show.S01E02.Episode.Name.1080p.ItunesUHD.WEB-DL.x264",
             "Test.Show.S01E02.Episode.Name.1080p.AMZN.WEB-DL.x264",
             "Test.Show.S01E02.Episode.Name.1080p.Amazon.WEB-DL.x264",
@@ -106,8 +110,14 @@ class QualityStringTests(unittest.TestCase):
             "Test.Show.S01E02.Episode.Name.German.DD51.DL.1080p.NetflixHD.x264",
             "Test.Show.S01E02.Episode.Name.German.DD51.DL.1080p.NetflixUHD.x264",
         ],
-        "hd_bluray": ["Test.Show.S01E02.720p.BluRay.x264-GROUP", "Test.Show.S01E02.720p.HDDVD.x264-GROUP"],
-        "full_hd_bluray": ["Test.Show.S01E02.1080p.BluRay.x264-GROUP", "Test.Show.S01E02.1080p.HDDVD.x264-GROUP"],
+        "hd_bluray": [
+            "Test.Show.S01E02.720p.BluRay.x264-GROUP",
+            "Test.Show.S01E02.720p.HDDVD.x264-GROUP",
+        ],
+        "full_hd_bluray": [
+            "Test.Show.S01E02.1080p.BluRay.x264-GROUP",
+            "Test.Show.S01E02.1080p.HDDVD.x264-GROUP",
+        ],
         "unknown": [
             "Test.Show.S01E02-SiCKCHILL",
             "Test.Show.S01E01-20.1080i.[Mux.-.1080i.-.H264.-.Ac3.].HDTVMux.GROUP",
@@ -282,7 +292,12 @@ class QualityStringTests(unittest.TestCase):
             for qual, tests in test_cases.items():
                 for name in tests:
                     name_quality = common.Quality.nameQuality(name, anime=True)
-                    name_info = (qual, name, expected_qual, common.Quality.nameQuality(name, anime=True))
+                    name_info = (
+                        qual,
+                        name,
+                        expected_qual,
+                        common.Quality.nameQuality(name, anime=True),
+                    )
                     if qual == cur_test:
                         assert expected_qual == name_quality, name_info
                     else:
@@ -314,7 +329,11 @@ class QualityTests(unittest.TestCase):
         ]
         for test in tests:
             quality, test = test
-            assert quality == common.Quality.nameQuality(test), (quality, common.Quality.nameQuality(test), test)
+            assert quality == common.Quality.nameQuality(test), (
+                quality,
+                common.Quality.nameQuality(test),
+                test,
+            )
 
     @unittest.skip("Not yet implemented")
     def test_get_status_strings(self):

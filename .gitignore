@@ -1,8 +1,14 @@
+#
+#
+#
+
+.pypirc
+
 #  SC User Related   #
 ######################
 /cache/
-/gui/slick/cache
-/sickchill/gui/slick/cache
+/gui/slick/cache/
+/sickchill/gui/slick/cache/
 /Logs/
 /data/
 restore/
@@ -16,6 +22,7 @@ movies.db*
 autoProcessTV.cfg
 server.crt
 server.key
+.coverage.*.*
 
 #  SC Test Related   #
 ######################
@@ -25,6 +32,10 @@ server.key
 /tests/cache.db*
 /tests/failed.db
 /tests/data/
+/tests/Downloads/
+/tests/show name/
+/tests/base.crt
+/tests/base.key
 
 #  Compiled source   #
 ######################
@@ -32,6 +43,7 @@ server.key
 
 #  IDE specific      #
 ######################
+__pycache__/
 *.bak
 *.tmp
 *.wpr
@@ -107,5 +119,3 @@ atlassian-ide-plugin.xml
 # Readynas
 config.xml
 fvapp-sickchill.service
-
-poetry.lock

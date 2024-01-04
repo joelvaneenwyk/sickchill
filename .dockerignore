@@ -1,9 +1,10 @@
-tests
-.github
+tests/
+.github/
 /build/
 sickchill.egg-info
-.pytest_cache
+.pytest_cache/
 /.eggs/
 /dist/
-.venv
+.venv/
 .git
+.yarn/
