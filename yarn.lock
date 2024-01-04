@@ -1523,6 +1523,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/cli@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/cli@npm:18.4.4"
+  dependencies:
+    "@commitlint/format": "npm:^18.4.4"
+    "@commitlint/lint": "npm:^18.4.4"
+    "@commitlint/load": "npm:^18.4.4"
+    "@commitlint/read": "npm:^18.4.4"
+    "@commitlint/types": "npm:^18.4.4"
+    execa: "npm:^5.0.0"
+    lodash.isfunction: "npm:^3.0.9"
+    resolve-from: "npm:5.0.0"
+    resolve-global: "npm:1.0.0"
+    yargs: "npm:^17.0.0"
+  bin:
+    commitlint: cli.js
+  checksum: 2bbd5120852596f5eb7006993e225abb78aee5216d1737a4bca8ffee68273a6b8a1cf5a86a620677c6c554bba1bdb9af35c00c51078c012b9e6a012fbbce874f
+  languageName: node
+  linkType: hard
+
 "@commitlint/config-conventional@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/config-conventional@npm:18.4.3"
@@ -1542,6 +1562,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/config-validator@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/config-validator@npm:18.4.4"
+  dependencies:
+    "@commitlint/types": "npm:^18.4.4"
+    ajv: "npm:^8.11.0"
+  checksum: 00599bb176db32e873f1848d6889ddf28b1ac287f679a153a2daa076d34b529342feed527fa96a5fee75eccef0dbb2bf1e391d265bddbd5168c1afb233fd93b0
+  languageName: node
+  linkType: hard
+
 "@commitlint/ensure@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/ensure@npm:18.4.3"
@@ -1556,10 +1586,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/ensure@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/ensure@npm:18.4.4"
+  dependencies:
+    "@commitlint/types": "npm:^18.4.4"
+    lodash.camelcase: "npm:^4.3.0"
+    lodash.kebabcase: "npm:^4.1.1"
+    lodash.snakecase: "npm:^4.1.1"
+    lodash.startcase: "npm:^4.4.0"
+    lodash.upperfirst: "npm:^4.3.1"
+  checksum: 59eeddd0ffe99c75566684d8d55ffaf1eca0c2488d0fa8a7195984e1ec9510aa59ca469e318ee6200dae229f946efb9427a1072d196a1994646f10d3ffb70ec6
+  languageName: node
+  linkType: hard
+
 "@commitlint/execute-rule@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/execute-rule@npm:18.4.3"
   checksum: 6a0514733c3fab7279b4831df58f518b98c589d05eace2d9b5f1f64d05f9f1493af51f3b6004df4f90e794b98798ee07cf4c5fbe9e97f37d5437a50cd56bf52f
+  languageName: node
+  linkType: hard
+
+"@commitlint/execute-rule@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/execute-rule@npm:18.4.4"
+  checksum: 1f4fde42649616c403361c4f52802f23cd2995c51f5ae44f02c75897d6f62fbd5b499488033181a67058368da4eaafe91c1aaa7b9b95dbff60233310d4078df4
   languageName: node
   linkType: hard
 
@@ -1573,6 +1624,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/format@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/format@npm:18.4.4"
+  dependencies:
+    "@commitlint/types": "npm:^18.4.4"
+    chalk: "npm:^4.1.0"
+  checksum: f853be5b9e7899fe66593332d888a5b5f3d54f7d635d7ab0a57ae49b5b40f3c789c4746b2257cbf53f1f7de6944f2c15f9f6cb414e80b9224958e1c2fb044498
+  languageName: node
+  linkType: hard
+
 "@commitlint/is-ignored@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/is-ignored@npm:18.4.3"
@@ -1580,6 +1641,16 @@ __metadata:
     "@commitlint/types": "npm:^18.4.3"
     semver: "npm:7.5.4"
   checksum: 9b2456e0b31656eb1c2828d6a4c0ec12815bfb88e734bc673315a08a6ef5b19e96ecd0cc925d88b797bafe4c09a3aca7d5841c02f8e5de4cc88473bbfba1a275
+  languageName: node
+  linkType: hard
+
+"@commitlint/is-ignored@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/is-ignored@npm:18.4.4"
+  dependencies:
+    "@commitlint/types": "npm:^18.4.4"
+    semver: "npm:7.5.4"
+  checksum: d272fbff78798475db52adb8f9fb33bd409c869e99af8b60418b36376143a4076a720cf34f3389b4e0bbd7fd42cae6bf7b390b276abfe395f31411688221c28a
   languageName: node
   linkType: hard
 
@@ -1592,6 +1663,18 @@ __metadata:
     "@commitlint/rules": "npm:^18.4.3"
     "@commitlint/types": "npm:^18.4.3"
   checksum: c5b7c8296db1973784d8642148bbdb7f75f9edc6700eafb4c1b1be57706ce79188e95da834742d4559430000ba640b80a0b90a92aa3555c4948155f2358ceaa0
+  languageName: node
+  linkType: hard
+
+"@commitlint/lint@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/lint@npm:18.4.4"
+  dependencies:
+    "@commitlint/is-ignored": "npm:^18.4.4"
+    "@commitlint/parse": "npm:^18.4.4"
+    "@commitlint/rules": "npm:^18.4.4"
+    "@commitlint/types": "npm:^18.4.4"
+  checksum: 19ad7638f34b5888b7c7634a05acf7fb289128bd885af3588ab1a1f1f97f97f284874804ed926ca427c93d7407163f14124d5a260f22735d7c6b1f79aea4a7ec
   languageName: node
   linkType: hard
 
@@ -1615,10 +1698,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/load@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/load@npm:18.4.4"
+  dependencies:
+    "@commitlint/config-validator": "npm:^18.4.4"
+    "@commitlint/execute-rule": "npm:^18.4.4"
+    "@commitlint/resolve-extends": "npm:^18.4.4"
+    "@commitlint/types": "npm:^18.4.4"
+    chalk: "npm:^4.1.0"
+    cosmiconfig: "npm:^8.3.6"
+    cosmiconfig-typescript-loader: "npm:^5.0.0"
+    lodash.isplainobject: "npm:^4.0.6"
+    lodash.merge: "npm:^4.6.2"
+    lodash.uniq: "npm:^4.5.0"
+    resolve-from: "npm:^5.0.0"
+  checksum: 46202e2882efd35d759e30bbc1e4ad784d61d2ab2e1522be7e59c54743cfb94303fcbbef1eeb42d556dd76b559d1e35d5c0aa220875a71ece5b5cf994df18bf8
+  languageName: node
+  linkType: hard
+
 "@commitlint/message@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/message@npm:18.4.3"
   checksum: 24b373d5c99230351a31294e974ee338cbac45094c66a6ba9ce00357783f7ebb250fc169fcdd815c8d510951757119fbd1329e7ab9e3097d3e732768d3d93787
+  languageName: node
+  linkType: hard
+
+"@commitlint/message@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/message@npm:18.4.4"
+  checksum: f9799bc95eb6757cbd87c5053c8d601c05a862ec2470c4f7f3bafaf0eff9fe1ab623329fc58dc4e9b2a7372838b6a324f8c88f43734af02ec72f760c023efc04
   languageName: node
   linkType: hard
 
@@ -1633,6 +1742,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/parse@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/parse@npm:18.4.4"
+  dependencies:
+    "@commitlint/types": "npm:^18.4.4"
+    conventional-changelog-angular: "npm:^7.0.0"
+    conventional-commits-parser: "npm:^5.0.0"
+  checksum: 540d24f8fa8cbfcca2b1e126edc08e39573820fbf9e65c51b3aff2c9452b1405963649211fc8fdab1d26dad5fb6bc350ed8762d6bbe7ebcfc1262bf0c4d6c996
+  languageName: node
+  linkType: hard
+
 "@commitlint/read@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/read@npm:18.4.3"
@@ -1643,6 +1763,18 @@ __metadata:
     git-raw-commits: "npm:^2.0.11"
     minimist: "npm:^1.2.6"
   checksum: 35621e5aeb5234c01e98bf30bdf7c6b5e710d7fcfe4e75a6708e64157160344c3ea1ebc4dc82b49b590909daa0a8258e489e3f8c70c56a96a0b884d7d724f01a
+  languageName: node
+  linkType: hard
+
+"@commitlint/read@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/read@npm:18.4.4"
+  dependencies:
+    "@commitlint/top-level": "npm:^18.4.4"
+    "@commitlint/types": "npm:^18.4.4"
+    git-raw-commits: "npm:^2.0.11"
+    minimist: "npm:^1.2.6"
+  checksum: 4efa8fbfe97647dd36bba5f37a901cb0fba5d2d3ebfd97b4dbd3357af5ca59c51f4d28c5d96df48b74943b6d6a38feaf470fa7088b4d483f1bf62b0eaf74a8cf
   languageName: node
   linkType: hard
 
@@ -1660,6 +1792,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/resolve-extends@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/resolve-extends@npm:18.4.4"
+  dependencies:
+    "@commitlint/config-validator": "npm:^18.4.4"
+    "@commitlint/types": "npm:^18.4.4"
+    import-fresh: "npm:^3.0.0"
+    lodash.mergewith: "npm:^4.6.2"
+    resolve-from: "npm:^5.0.0"
+    resolve-global: "npm:^1.0.0"
+  checksum: 0b6cc0a0fe195c693286022129d7ef2cec65ab5e8c004f3681dc43bd7fa21a9fdf3b81a1818d74b94c71932e34f6203008dd8745e8b5b2acb5713aec21b93652
+  languageName: node
+  linkType: hard
+
 "@commitlint/rules@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/rules@npm:18.4.3"
@@ -1673,10 +1819,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/rules@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/rules@npm:18.4.4"
+  dependencies:
+    "@commitlint/ensure": "npm:^18.4.4"
+    "@commitlint/message": "npm:^18.4.4"
+    "@commitlint/to-lines": "npm:^18.4.4"
+    "@commitlint/types": "npm:^18.4.4"
+    execa: "npm:^5.0.0"
+  checksum: de43d5001881f92ca38c4eb907e7f7349056768fd1aaeaeff5978611743ce2370940ff7e1c0c541fe98dc92e97c928d45a098e50900adda0c3c69a890a6bbbf8
+  languageName: node
+  linkType: hard
+
 "@commitlint/to-lines@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/to-lines@npm:18.4.3"
   checksum: a163a647ebcdc9fb8a84f3406f92fde78b90cc73146c367367806d52022c6b6219b78f5b0afea0faab357f95b9e311822bc9309a0148fd31f30bdb77bfcfd84a
+  languageName: node
+  linkType: hard
+
+"@commitlint/to-lines@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/to-lines@npm:18.4.4"
+  checksum: 0ba45f160235527995dc6891ef5f72b1c55d78244ca60f7b8cc51a4de33c963ec54be4458a6b06214deba58fb7596d989d3e95aa68404a7f200af9df936d8032
   languageName: node
   linkType: hard
 
@@ -1689,12 +1855,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@commitlint/top-level@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/top-level@npm:18.4.4"
+  dependencies:
+    find-up: "npm:^5.0.0"
+  checksum: c95bf9c91627789bb2b3fd941a767214b3dee9f7273d0926fb81f1b33c5ee2721bee69d1f75aebc1e17fe83a4f59aff922ca1f9cc34907d19bf28b1dbb5bbfde
+  languageName: node
+  linkType: hard
+
 "@commitlint/types@npm:^18.4.3":
   version: 18.4.3
   resolution: "@commitlint/types@npm:18.4.3"
   dependencies:
     chalk: "npm:^4.1.0"
   checksum: 07cbc4b5eb813052401d9e332c0dadca7864cd22eddd06edb6afd1da212243d505c4429ce100012c4086ea99d0f4a4086382fc88e3e662c6577e69d638c3903e
+  languageName: node
+  linkType: hard
+
+"@commitlint/types@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "@commitlint/types@npm:18.4.4"
+  dependencies:
+    chalk: "npm:^4.1.0"
+  checksum: 706307d76761107a11c2ed95800f9fc66b66a125ab2142021dca6fb1fe316a5a417fd4b8647f2b76405c549a243bdb4c2c050cea05806f328670e70b536b4f67
   languageName: node
   linkType: hard
 
@@ -6319,6 +6503,18 @@ __metadata:
   version: 2.14.1
   resolution: "commander@npm:2.14.1"
   checksum: b29bb0220fb27645a958a9cbecc5c138adeb4d151a17d43acd5c8cd7ffed1a64e502a20338e3faad235c5c8e23df893dd02dfe6eddf47f90fc51b51825084719
+  languageName: node
+  linkType: hard
+
+"commitlint@npm:^18.4.4":
+  version: 18.4.4
+  resolution: "commitlint@npm:18.4.4"
+  dependencies:
+    "@commitlint/cli": "npm:^18.4.4"
+    "@commitlint/types": "npm:^18.4.4"
+  bin:
+    commitlint: cli.js
+  checksum: 4202eab55a3b838d922341ebd2d299294458df4477e2befc0a1ec516fb4619a3abac2d128d4d6244ff6502a6cc3043deca5f2c4e78f9d0cd4efea0425058e06d
   languageName: node
   linkType: hard
 
@@ -17041,6 +17237,7 @@ __metadata:
     bootstrap: "npm:^5.3.2"
     bower: "npm:^1.8.14"
     browser-env: "npm:^3.3.0"
+    commitlint: "npm:^18.4.4"
     copy-webpack-plugin: "npm:^11.0.0"
     css-loader: "npm:^6.8.1"
     eslint: "npm:>=8.56.0"
@@ -17072,6 +17269,7 @@ __metadata:
     grunt-exec: "npm:^3.0.0"
     grunt-po2json: "git+https://github.com/rockykitamura/grunt-po2json.git"
     html-webpack-plugin: "npm:^5.6.0"
+    husky: "npm:^8.0.3"
     jquery: "npm:^3.7.1"
     load-grunt-tasks: "npm:^5.1.0"
     lodash: "npm:^4.17.21"
