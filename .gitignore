@@ -6,6 +6,7 @@
 out.txt
 workbox-*.js
 service-worker.js
+.dccache
 
 #  SC User Related   #
 ######################

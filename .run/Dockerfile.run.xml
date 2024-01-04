@@ -3,6 +3,7 @@
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="sickchill:develop" />
+        <option name="buildKitEnabled" value="true" />
         <option name="containerName" value="sickchill" />
         <option name="showCommandPreview" value="true" />
         <option name="sourceFilePath" value="Dockerfile" />
