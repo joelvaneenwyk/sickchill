@@ -1,7 +1,7 @@
 *.min.js
 dist/**/*
 Gruntfile.js
-frontend/static/*.js
+frontend/**/static/*.js
 sickchill/**/lib/*.js
 cache/
 .venv/
