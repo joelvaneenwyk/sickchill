@@ -16,7 +16,7 @@ const config = {
   // eslint-disable-next-line n/prefer-global/process
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   resolve: {
-    extensions: ['.js', '.jsx', '.css'],
+    extensions: ['.js', '.jsx', '.css', '.mjs', '.cjs'],
   },
   devServer: {
     open: true,
@@ -28,7 +28,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(?:js|jsx)$/i,
+        test: /\.(?:js|jsx|cjs|mjs)$/i,
         loader: 'babel-loader',
       },
       {
@@ -103,10 +103,8 @@ function getConfiguration() {
     }
   }
 
-  return config;
+  return outputs;
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {
-  ...getConfiguration(),
-};
+export default () => getConfiguration();
