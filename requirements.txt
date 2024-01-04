@@ -1,0 +1,12 @@
+poetry
+pytest
+pytest-cov
+ruff
+mock
+setuptools
+wheel
+pytest-github-actions-annotate-failures
+pre-commit
+toml
+poethepoet
+black

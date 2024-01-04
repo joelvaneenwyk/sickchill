@@ -1,44 +1,38 @@
+//
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
+//
 
-const path = require("path");
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const CopyPlugin = require("copy-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
+import {resolve as _resolve} from 'node:path';
 
-const isProduction = process.env.NODE_ENV == "production";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import {GenerateSW} from 'workbox-webpack-plugin';
 
+/** @type bool */
+const isProduction = process.env.NODE_ENV === 'production'; // eslint-disable-line n/prefer-global/process
+
+/** @type string */
 const stylesHandler = MiniCssExtractPlugin.loader;
 
+/** @type {import('webpack').Configuration} */
 const config = {
-  context:  path.resolve(__dirname, 'frontend/templates'),
+  context: _resolve(_resolve(), 'frontend/templates'),
   entry: {
-      shows: ['./js/shows.jsx'],
-      show: ['./js/show.jsx']
+    shows: ['./js/shows.jsx'],
+    show: ['./js/show.jsx'],
   },
   output: {
-    path: __dirname + "/frontend/static",
+    path: _resolve() + '/frontend/static',
     filename: '[name].js',
-    publicPath: path.resolve('static')
+    publicPath: _resolve('static'),
   },
- resolve: {
-  extensions: ['.js','.jsx','.css']
- },
+  resolve: {
+    extensions: ['.js', '.jsx', '.css'],
+  },
   devServer: {
     open: true,
-    host: "localhost",
+    host: 'localhost',
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   template: "shows.html",
-    //   inject: false
-    //
-    // }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     '*.html'
-    //   ]
-    // }),
     new MiniCssExtractPlugin(),
 
     // Add your plugins here
@@ -48,19 +42,19 @@ const config = {
     rules: [
       {
         test: /\.(js|jsx)$/i,
-        loader: "babel-loader",
+        loader: 'babel-loader',
       },
       {
         test: /\.css$/i,
-        use: [stylesHandler, "css-loader"],
+        use: [stylesHandler, 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [stylesHandler, "css-loader", "sass-loader"],
+        use: [stylesHandler, 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: "asset",
+        type: 'asset',
       },
 
       // Add your rules for custom modules here
@@ -69,13 +63,14 @@ const config = {
   },
 };
 
-module.exports = () => {
+export default function getConfiguration() {
   if (isProduction) {
-    config.mode = "production";
+    config.mode = 'production';
 
-    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    config.plugins.push(new GenerateSW());
   } else {
-    config.mode = "development";
+    config.mode = 'development';
   }
+
   return config;
-};
+}
