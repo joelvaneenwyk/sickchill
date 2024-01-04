@@ -3,6 +3,7 @@
 #
 
 .pypirc
+out.txt
 
 #  SC User Related   #
 ######################

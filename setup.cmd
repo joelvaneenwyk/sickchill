@@ -62,11 +62,15 @@ setlocal EnableExtensions
 
     set VIRTUAL_ENV_DISABLE_PROMPT=1
     call :Command poetry shell
+    if errorlevel 1 goto:$MainError
 
     call :Command poetry run pip install --upgrade pip setuptools wheel pytest-github-actions-annotate-failures
     if errorlevel 1 goto:$MainError
 
     call :Command poetry install --no-interaction --with dev --with speedups
+    if errorlevel 1 goto:$MainError
+
+    call :Command poetry lock
     if errorlevel 1 goto:$MainError
 
     call :Command poetry run black .
