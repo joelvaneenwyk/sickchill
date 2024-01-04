@@ -1,13 +1,22 @@
-const path = require('node:path');
+//
+// Generated using webpack-cli https://github.com/webpack/webpack-cli
+//
 
-// Const CopyPlugin = require('copy-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {GenerateSW} = require('workbox-webpack-plugin');
+import {join, dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import {GenerateSW} from 'workbox-webpack-plugin';
+
+const fileUrl = fileURLToPath(import.meta.url);
+const projectRoot = dirname(fileUrl);
+
+/** @type {string} */
 const stylesHandler = MiniCssExtractPlugin.loader;
 
-const config = {
+/** @type {import('webpack').Configuration} */
+export const config = {
+  // eslint-disable-next-line n/prefer-global/process
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   resolve: {
     extensions: ['.js', '.jsx', '.css'],
@@ -19,7 +28,6 @@ const config = {
   plugins: [
     new MiniCssExtractPlugin(),
   ],
-
   module: {
     rules: [
       {
@@ -42,49 +50,54 @@ const config = {
   },
 };
 
-const configurations = {
+/** @type {import('webpack').Configuration} */
+export const configurations = {
   ...config,
   name: 'config',
-  context: path.resolve(__dirname, 'frontend', 'config', 'src', 'js'),
+  context: join(projectRoot, 'frontend', 'config', 'src', 'js'),
   entry: {
     config: ['./config.jsx'],
   },
   output: {
-    path: path.resolve(__dirname, 'frontend', 'config', 'static'),
+    path: join(projectRoot, 'frontend', 'config', 'static'),
     filename: '[name].js',
-    publicPath: path.resolve('static'),
+    publicPath: join(projectRoot, 'static'),
   },
 };
-const shows = {
+
+/** @type {import('webpack').Configuration} */
+export const shows = {
   ...config,
   name: 'shows',
-  context: path.resolve(__dirname, 'frontend', 'shows', 'src', 'js'),
+  context: join(projectRoot, 'frontend', 'shows', 'src', 'js'),
   entry: {
     shows: ['./shows.jsx'],
     show: ['./show.jsx'],
   },
   output: {
-    path: path.resolve(__dirname, 'frontend', 'shows', 'static'),
+    path: join(projectRoot, 'frontend', 'shows', 'static'),
     filename: '[name].js',
-    publicPath: path.resolve('static'),
+    publicPath: join(projectRoot, 'static'),
   },
 };
-const movies = {
+
+/** @type {import('webpack').Configuration} */
+export const movies = {
   ...config,
   name: 'movies',
-  context: path.resolve(__dirname, 'frontend', 'movies', 'src', 'js'),
+  context: join(projectRoot, 'frontend', 'movies', 'src', 'js'),
   entry: {
     movies: ['./movies.jsx'],
     movie: ['./movie.jsx'],
   },
   output: {
-    path: path.resolve(__dirname, 'frontend', 'movies', 'static'),
+    path: join(projectRoot, 'frontend', 'movies', 'static'),
     filename: '[name].js',
-    publicPath: path.resolve('static'),
+    publicPath: join(projectRoot, 'static'),
   },
 };
 
-module.exports = () => {
+export default function getConfiguration() {
   const outputs = [configurations, shows, movies];
   for (const item of outputs) {
     if (item.mode === 'production') {
@@ -93,5 +106,5 @@ module.exports = () => {
     }
   }
 
-  return outputs;
-};
+  return config;
+}
