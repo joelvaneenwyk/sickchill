@@ -95,7 +95,7 @@
     "mini-css-extract-plugin": "^2.7.6",
     "npm-check-updates": "^16.14.12",
     "postinstaller": "^0.0.5",
-    "sass": "^1.69.7",
+    "sass": "^1.70.0",
     "sass-loader": "^13.3.3",
     "setup-browser-env": "workspace:*",
     "snyk": "^1.1267.0",
