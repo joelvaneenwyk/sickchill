@@ -21,11 +21,12 @@ concurrency:
 
 env:
   SLEEP: 60
-  DOCKER_BUILDKIT: '1'
-  DOCKER_TEST_TAG: sickchill/sickchill:test
+  DOCKER_BUILDKIT: "1"
+  DOCKER_TEST_TAG: joelvaneenwyk/sickchill:test
   DOCKER_CONTAINER_NAME: sickchill_test
-  TARGET_PLATFORMS: "linux/amd64,linux/arm64"
+  TARGET_PLATFORMS: "linux/amd64,linux/arm64,linux/arm32v7"
   CRYPTOGRAPHY_DONT_BUILD_RUST: 1
+  DEFAULT_USER: joelvaneenwyk
 
 defaults:
   run:
@@ -37,29 +38,32 @@ jobs:
     outputs:
       docker_tags: ${{ steps.docker.outputs.tags }}
       docker_labels: ${{ steps.docker.outputs.labels }}
+
     steps:
       - name: Cache environment files
         uses: actions/cache@v3
         with:
           path: /tmp/buildkitd.toml
           key: ${{ github.workflow }}-environment
+
       - name: Create buildkitd config
         run: |
-          echo 'experimantal = true' > /tmp/buildkitd.toml
+          echo 'experimental = true' > /tmp/buildkitd.toml
           echo 'debug = true' >> /tmp/buildkitd.toml
           echo 'insecure-entitlements  = [ "security.insecure" ]' >> /tmp/buildkitd.toml
           # echo '[worker.oci]' >> /tmp/buildkitd.toml
           # echo 'max-parallelism = 1' >> /tmp/buildkitd.toml
           cat /tmp/buildkitd.toml
+
       - name: Docker meta
         id: docker
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v4
         with:
           images: |
             ${{ github.repository }}
             ghcr.io/${{ github.repository }}
           labels: |
-            org.opencontainers.image.source=https://github.com/sickchill/sickchill
+            org.opencontainers.image.source=https://github.com/joelvaneenwyk/sickchill
             org.opencontainers.image.url=https://sickchill.github.io
             org.opencontainers.image.licenses=GPL-3.0+
           tags: |
@@ -75,73 +79,108 @@ jobs:
             type=edge,branch=develop
             type=semver,pattern={{version}},enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
             type=semver,pattern={{major}}.{{minor}},enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+
   Test:
     strategy:
+      fail-fast: false
       matrix:
-        os: [ ubuntu-latest ]
-        python-version: [ 3.8, 3.9, "3.10", "3.11" ]
-        experimental: [ false ]
+        poetry-version: ["1.7.1"]
+        os: [ubuntu-latest]
+        python-version: ["3.11", "3.9", "3.8"]
+        experimental: [false]
+        run-additional-tests: [false]
         include:
           - os: windows-latest
             python-version: "3.11"
+            poetry-version: "1.7.1"
             experimental: false
+            run-additional-tests: false
           - os: macos-latest
             python-version: "3.11"
+            poetry-version: "1.7.1"
             experimental: false
-      fail-fast: true
-    continue-on-error: ${{ matrix.experimental }}
+            run-additional-tests: false
+          - os: ubuntu-latest
+            python-version: "3.10"
+            poetry-version: "1.7.1"
+            experimental: false
+            run-additional-tests: true
+
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           persist-credentials: false
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10'
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Setup local virtual environment
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+
+      - name: View poetry --help
+        run: poetry --help
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "16.x"
+
+      - run: corepack enable
+
+      - if: ${{ matrix.os == 'ubuntu-latest' && success() }}
         name: Lint shell scripts
         uses: ludeeus/action-shellcheck@master
         with:
           format: diff
-      - name: Setup Poetry
-        uses: 5yutan5/setup-poetry-env@v1.1.0
-        with:
-          python-version: ${{ matrix.python-version }}
-          python-cache-dependency-path: pyproject.toml
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10'
-        name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'yarn'
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.10'
-        name: Install yarn
-        run: npm install -g yarn
-      - name: Install python dependency tools
+
+      - name: Install Python dependency tools
         run: |
           poetry run pip install --upgrade setuptools wheel
           poetry run pip install --upgrade pytest-github-actions-annotate-failures
+
       - name: Output tooling environment information
         run: |
           echo -e "$(poetry --version --ansi) is at $(which poetry)\n$(poetry env info --ansi)\n\v$(poetry --ansi run pip -V)"
+
       - name: Install sickchill
         run: |
           poetry install --no-interaction --with dev --with speedups
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
+
+      - if: ${{ matrix.run-additional-tests && success() }}
         name: Run yarn
         run: poetry run poe yarn
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
+
+      - if: ${{ matrix.run-additional-tests && success() }}
         name: Lint Python
         run: poetry run poe lint
-      - if: success() && startsWith(runner.os, 'Linux') && matrix.python-version == '3.11'
+
+      - if: ${{ matrix.run-additional-tests && success() }}
         name: Lint and test Javascript
         run: poetry run poe yarn test
+
       - name: Test Python
         run: poetry run poe pytest
+
       - if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
         name: Coverage
         run: poetry run poe codecov --env OS=${{ runner.os }} Interpreter="$(poetry run python -V)" -t ${{ secrets.CODECOV_TOKEN }}
+
   Test-Docker:
-    needs: [ Environment, Test ]
+    needs: [Environment, Test]
     runs-on: ubuntu-22.04
     steps:
       - name: Restore environment files
@@ -150,12 +189,15 @@ jobs:
           path: /tmp/buildkitd.toml
           key: ${{ github.workflow }}-environment
           restore-keys: ${{ github.workflow }}-environment
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
           config: /tmp/buildkitd.toml
+
       - name: Test Docker Build
         uses: docker/build-push-action@v5
         with:
@@ -167,51 +209,56 @@ jobs:
           target: sickchill-final
           cache-from: type=gha
           build-args: |
-            SOURCE=1
-          allow: |
-            security.insecure
+            SOURCE=GitHubAction
+
       - name: Test Docker Image
         run: |
           docker run -d --rm -p 8081:8081 --name ${{ env.DOCKER_CONTAINER_NAME }} ${{ env.DOCKER_TEST_TAG }}
           echo "Waiting ${{ env.SLEEP }} seconds for the container to start..." && sleep ${{ env.SLEEP }}
           echo "Checking if container is alive..."
-          [ $(curl http://localhost:8081/ui/get_messages -s) == "{}" ] && echo "Success!" || (echo "Failed" && exit 1)
+          [ $(curl http://0.0.0.0:8081/ui/get_messages -s) == "{}" ] && echo "Success!" || (echo "Failed" && exit 1)
           echo "Checking if we have a working home page..."
-          $(curl http://localhost:8081/home/ -s | grep -q "site-notification-modal") && echo "Success!" || (echo "Failed" && exit 1)
+          [ $(curl http://0.0.0.0:8081 -s) ~='site-notification-modal' ] && echo "Success!" || (echo "Failed" && exit 1)
           echo "Stopping and removing container..."
           docker stop ${{ env.DOCKER_CONTAINER_NAME }}
+
   Deploy:
-    needs: [ Environment, Test, Test-Docker ]
+    needs: [Environment, Test, Test-Docker]
     runs-on: ubuntu-22.04
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
+
       - name: Cache environment files
         uses: actions/cache@v3
         with:
           path: /tmp/buildkitd.toml
           key: ${{ github.workflow }}-environment
           restore-keys: ${{ github.workflow }}-environment
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
           config: /tmp/buildkitd.toml
-      - if: github.actor == 'miigotu' && !env.ACT
+
+      - if: ${{ github.actor == env.DEFAULT_USER && !env.ACT }}
         name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - if: github.actor == 'miigotu' && !env.ACT
+
+      - if: ${{ github.actor == env.DEFAULT_USER && !env.ACT }}
         name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - if: github.actor == 'miigotu'
+
+      - if: ${{ github.actor == env.DEFAULT_USER }}
         name: Build and Push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v4
         with:
           platforms: ${{ env.TARGET_PLATFORMS }}
           push: ${{ github.event_name != 'pull_request' && !env.ACT }}
@@ -224,9 +271,10 @@ jobs:
             SOURCE=1
           allow: |
             security.insecure
-      - if: github.actor == 'miigotu'
+
+      - if: ${{ github.actor == env.DEFAULT_USER }}
         name: Snag wheels
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v4
         with:
           file: Dockerfile
           platforms: ${{ env.TARGET_PLATFORMS }}
@@ -238,28 +286,26 @@ jobs:
             SOURCE=1
           allow: |
             security.insecure
-      - if: github.actor == 'miigotu'
+
+      - if: ${{ github.actor == env.DEFAULT_USER }}
         name: List wheels directory
         run: |
           ls -R /tmp/sickchill-wheels
+
       - name: Upload linux/amd64 wheels
         uses: actions/upload-artifact@v4
         with:
           name: amd64
           path: /tmp/sickchill-wheels/linux_amd64
+
       - name: Upload linux/arm64 wheels
         uses: actions/upload-artifact@v4
         with:
           name: arm64
           path: /tmp/sickchill-wheels/linux_arm64
-      - name: Upload linux/arm/v7 wheels
+
+      - name: Upload linux/arm32/v7 wheels
         uses: actions/upload-artifact@v4
         with:
           name: armv7
-          path: /tmp/sickchill-wheels/linux_arm_v7
-  complete:
-    name: Packaging tests completed
-    runs-on: [ ubuntu-latest ]
-    needs: [ Environment, Test, Test-Docker, Deploy ]
-    steps:
-      - run: echo "Success!"
+          path: /tmp/sickchill-wheels/linux_arm32v7

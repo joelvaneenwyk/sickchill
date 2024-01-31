@@ -1,0 +1,11 @@
+*.min.js
+dist/**/*
+Gruntfile.js
+frontend/**/static/*.js
+sickchill/**/lib/*.js
+sickchill/gui/slick/js/*.js
+cache/
+.venv/
+.pytest_cache/
+__pycache__/
+node_modules/

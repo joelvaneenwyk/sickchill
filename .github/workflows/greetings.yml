@@ -15,7 +15,7 @@ concurrency:
 jobs:
   greeting:
     runs-on: ubuntu-22.04
-    if: github.repository == 'SickChill/SickChill'
+    if: github.repository == 'joelvaneenwyk/SickChill'
     steps:
     - uses: actions/first-interaction@v1
       with:

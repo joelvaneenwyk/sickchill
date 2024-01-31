@@ -2,7 +2,10 @@ version: '2'
 
 services:
   sickchill:
-    image: sickchill/sickchill:latest
+    image: joelvaneenwyk/sickchill:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: sickchill
     restart: unless-stopped
     ports:
