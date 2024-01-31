@@ -7,7 +7,7 @@
 # -p 8080:8081 joelvaneenwyk/sickchill
 
 ARG TARGETPLATFORM=linux/amd64
-FROM --platform=$TARGETPLATFORM python:3.10-slim-bullseye as base
+FROM --platform=$TARGETPLATFORM python:3.12-slim-bullseye as base
 
 LABEL org.opencontainers.image.source="https://github.com/joelvaneenwyk/sickchill"
 LABEL maintainer="joelvaneenwyk@gmail.com"
