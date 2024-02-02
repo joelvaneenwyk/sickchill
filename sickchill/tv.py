@@ -749,7 +749,7 @@ class TVShow(object):
 
             self.default_ep_status = int(sql_results[0]["default_ep_status"] or SKIPPED)
 
-            if not self.imdb_id:
+            if sql_results[0]["imdb_id"] and not self.imdb_id:
                 self.imdb_id = sql_results[0]["imdb_id"]
 
             if self.is_anime:
@@ -814,9 +814,10 @@ class TVShow(object):
 
     def load_imdb_info(self):
         # TODO: Create shows only database from s3 datasets, possibly distributable from sickchill.github.io until they are integrated into sickindexer
-        client = Cinemagoer()
 
         try:
+            client = Cinemagoer()
+
             # Check that the imdb_id we have is valid for searching
             self.check_imdb_id()
 
@@ -894,8 +895,9 @@ class TVShow(object):
             }
 
             logger.debug(f"{self.indexerid}: Obtained info from IMDb ->{self.imdb_info}")
-        except (ValueError, LookupError, OperationalError, imdb.IMDbError, NewConnectionError, MaxRetryError) as error:
-            logger.info(f"Could not get IMDB info: {error}")
+        except (TypeError, ValueError, LookupError, OperationalError, imdb.IMDbError, NewConnectionError, MaxRetryError) as error:
+            logger.info(f"Could not get IMDB info: see debug logs for details")
+            logger.debug(f"IMDB traceback: {error}")
         except (SyntaxError, KeyError):
             logger.info("Could not get info from IDMb, pip install lxml")
 

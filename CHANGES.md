@@ -1,3 +1,42 @@
+### 2024.2.2
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2024.1.31...2024.2.2)
+
+
+### 2024.1.8-3
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2024.1.8-2...2024.1.8-3)
+
+* Release 2024.1.8-3
+* Signed-off-by: miigotu <miigotu@gmail.com>
+
+### 2024.1.8-2
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2024.1.8-1...2024.1.8-2)
+
+* Release 2024.1.8-2
+* fix: another error in check_torznab (jackett/newznab/nzb)
+* Signed-off-by: miigotu <miigotu@gmail.com>
+
+### 2024.1.8-1
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2024.1.8...2024.1.8-1)
+
+* release: 2024.1.8-1 hotfix for newznab error
+* Signed-off-by: miigotu <miigotu@gmail.com>
+
+### 2024.1.8
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2024.1.31...2024.1.8)
+
+* Update Changelog
+
+### 2024.1.31
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2023.6.27...2024.1.31)
+
+* Release version 2024.1.31, Grunt
+
 ### 2023.6.27
 
 [full changelog](https://github.com/SickChill/SickChill/compare/2023.5.30...2023.6.27)
@@ -40,11 +79,25 @@
 
 ### 2023.5.24
 
-[full changelog](https://github.com/SickChill/SickChill/compare/2023.1.2...2023.5.24)
+[full changelog](https://github.com/SickChill/SickChill/compare/2023.10.20.1...2023.5.24)
 
 * Release version 2023.5.24
 * Bump webpack from 5.75.0 to 5.76.0
 * Bump http-cache-semantics from 4.1.0 to 4.1.1
+
+### 2023.10.20.1
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2023.10.20...2023.10.20.1)
+
+* try calver output
+* Signed-off-by: miigotu <miigotu@gmail.com>
+
+### 2023.10.20
+
+[full changelog](https://github.com/SickChill/SickChill/compare/2023.1.2...2023.10.20)
+
+* try calver output
+* Signed-off-by: miigotu <miigotu@gmail.com>
 
 ### 2023.1.2
 
