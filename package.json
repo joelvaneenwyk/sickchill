@@ -96,7 +96,7 @@
     "npm-check-updates": "^16.14.12",
     "postinstaller": "^0.0.5",
     "sass": "^1.69.7",
-    "sass-loader": "^13.3.3",
+    "sass-loader": "^14.1.1",
     "setup-browser-env": "workspace:*",
     "snyk": "^1.1267.0",
     "style-loader": "^3.3.3",
