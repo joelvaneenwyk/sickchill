@@ -65,7 +65,7 @@ poethepoet = ">=0.16,<0.25"
 po2json = "^0.2.2"
 pre-commit = ">=2.20,<4.0"
 importlib-metadata = ">=5.0"
-pylint = "^2.11.1"
+pylint = ">=2.11.1,<4.0.0"
 ruff = "^0.1.0"
 
 [tool.poetry.group.speedups]
