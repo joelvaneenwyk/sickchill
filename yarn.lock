@@ -16879,16 +16879,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.69.7":
-  version: 1.69.7
-  resolution: "sass@npm:1.69.7"
+"sass@npm:^1.71.1":
+  version: 1.71.1
+  resolution: "sass@npm:1.71.1"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 773d0938e7d4ff3972d3fda3132f34fe98a2f712e028a58e28fecd615434795eff3266eddc38d5e13f03b90c0d6360d0e737b30bff2949a47280c64a18e0fb18
+  checksum: 59d79a6e106747746792b0c71908ae0aecdaf9b794d5724ee64e5249412f0d8ebe7ee2bf12946618848f14f949c4f6b530d82da3e62ab31c71198c6f73002130
   languageName: node
   linkType: hard
 
@@ -17278,7 +17278,7 @@ __metadata:
     mini-css-extract-plugin: "npm:^2.7.6"
     npm-check-updates: "npm:^16.14.12"
     postinstaller: "npm:^0.0.5"
-    sass: "npm:^1.69.7"
+    sass: "npm:^1.71.1"
     sass-loader: "npm:^13.3.3"
     setup-browser-env: "workspace:*"
     snyk: "npm:^1.1267.0"
