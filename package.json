@@ -92,7 +92,7 @@
     "lodash": "^4.17.21",
     "mem-fs": "^4.0.0",
     "mem-fs-editor": "^11.0.0",
-    "mini-css-extract-plugin": "^2.7.6",
+    "mini-css-extract-plugin": "^2.8.1",
     "npm-check-updates": "^16.14.12",
     "postinstaller": "^0.0.5",
     "sass": "^1.69.7",
