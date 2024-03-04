@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.23.7",
+    "@babel/preset-env": "^7.24.0",
     "@babel/register": "^7.23.7",
     "@eslint-react/eslint-plugin": "^0.10.2",
     "@popperjs/core": "^2.11.8",
