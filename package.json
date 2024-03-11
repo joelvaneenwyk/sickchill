@@ -98,7 +98,7 @@
     "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
     "setup-browser-env": "workspace:*",
-    "snyk": "^1.1267.0",
+    "snyk": "^1.1283.0",
     "style-loader": "^3.3.3",
     "stylelint": "^16.1.0",
     "stylelint-config-idiomatic-order": "^10.0.0",
