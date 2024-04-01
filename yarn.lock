@@ -17281,7 +17281,7 @@ __metadata:
     sass: "npm:^1.69.7"
     sass-loader: "npm:^13.3.3"
     setup-browser-env: "workspace:*"
-    snyk: "npm:^1.1267.0"
+    snyk: "npm:^1.1286.2"
     style-loader: "npm:^3.3.3"
     stylelint: "npm:^16.1.0"
     stylelint-config-idiomatic-order: "npm:^10.0.0"
@@ -17403,15 +17403,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"snyk@npm:^1.1267.0":
-  version: 1.1267.0
-  resolution: "snyk@npm:1.1267.0"
+"snyk@npm:^1.1286.2":
+  version: 1.1286.2
+  resolution: "snyk@npm:1.1286.2"
   dependencies:
     "@sentry/node": "npm:^7.36.0"
     global-agent: "npm:^3.0.0"
   bin:
     snyk: bin/snyk
-  checksum: 7842b34d203be3fa7e73609fe4179f65e08cf738dc01a3fc653858602cb626beacf258915d97a1afcf6c99b8f905ffd40a9288f609b0ea8cb721712a7b5ec200
+  checksum: 587ffe171b9170187c9799d4f61a5e66c04e17b9890509b660594ae272ff81f750201f66afe8ecf694315740ccdcc9cb99868837c33e236dcb6125c17d767745
   languageName: node
   linkType: hard
 
