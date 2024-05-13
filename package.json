@@ -97,7 +97,7 @@
     "postinstaller": "^0.0.5",
     "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
-    "setup-browser-env": "workspace:*",
+    "setup-browser-env": "0.0.2",
     "snyk": "^1.1267.0",
     "style-loader": "^3.3.3",
     "stylelint": "^16.1.0",
